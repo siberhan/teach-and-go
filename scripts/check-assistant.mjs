@@ -1,6 +1,6 @@
 // Browser check with real AI: plan setup asks about the routine with options → tap one → Schedule shows dated topics;
 // the assistant agent by voice (fake mic) creates "Alex" with Maya's topics; typed commands answer, open, edit topics,
-// create two spaces from one Turkish message (reply in Turkish), fill an empty space's topics, rename, and delete after a tap.
+// create two spaces from one non-English message (reply in that language), fill an empty space's topics, rename, and delete after a tap.
 // Usage: node scripts/check-assistant.mjs <spoken-command.wav> <screenshot-dir>
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
@@ -123,14 +123,14 @@ r.closed = !(await p.$('.assistant-panel'))
 
 console.log(JSON.stringify(r, null, 1), errs)
 await b.close()
-const turkish = (t) => /[çğıöşü]/i.test(t) && !/\b(the|created|anything)\b/i.test(t)
+const notEnglish = (t) => /[çğıöşü]/i.test(t) && !/\b(the|created|anything)\b/i.test(t)
 const ok =
   r.options.length >= 2 && r.routine && !/No routine/.test(r.routine) &&
   r.timeline.length === 3 && !r.timeline.some((t) => t.startsWith('—')) &&
   /alex/i.test(r.said) && r.alexTopics >= 6 && !(r.alexSchedule?.slots?.length || r.alexSchedule?.everyDays) && r.stillOpen &&
   /Maya/.test(r.answer) && r.openedMaya && r.mayaTopics[1] > r.mayaTopics[0] &&
-  r.ronaldoMessi.every(Boolean) && turkish(r.two) && r.ronaldoTopics?.length === 3 && turkish(r.fill) &&
-  r.renamed && /Alex Kim/.test(r.deleteText) && !turkish(r.deleteText) && r.notYetDeleted && r.namesAfter.join() === 'Maya,Messi,Ronaldo' &&
+  r.ronaldoMessi.every(Boolean) && notEnglish(r.two) && r.ronaldoTopics?.length === 3 && notEnglish(r.fill) &&
+  r.renamed && /Alex Kim/.test(r.deleteText) && !notEnglish(r.deleteText) && r.notYetDeleted && r.namesAfter.join() === 'Maya,Messi,Ronaldo' &&
   r.cantReply.length > 10 && r.closed && !errs.length
 console.log(ok ? 'PASS' : 'FAIL')
 process.exit(ok ? 0 : 1)
