@@ -25,8 +25,8 @@ PRD ref: `prd.md > The Core Journey`.
 1. Teacher opens the site → the app reads the notebook → the Start screen shows upcoming lessons, calculated from each space's plan.
 2. Settings → keys are saved in the notebook.
 3. Start → Spaces screen lists spaces from the notebook, sorted by next lesson date → New space saves `{name}` and opens it.
-4. Space settings → the teacher attaches a PDF or image and/or types or dictates text. Dictation: audio → Whisper → text in the box. Send → the AI gets the file plus the text → returns a plan and at most one question with tap-able options → shown with Confirm/Cancel.
-5. Confirm → plan saved in the notebook. Any later message → current plan plus the message → the AI → updated plan (or a question).
+4. Space settings (plan conversation) → the teacher attaches a PDF or image and/or speaks or types. Speech → Whisper → text. The agent gets the files plus the text and the conversation so far.
+5. The agent saves topics and routine with its tools as it goes (the plan card above updates live) and asks one short question when the routine or the use of a new document is unclear.
 6. New recording → the microphone records 16 kHz mono audio, or the teacher picks an audio file, which is converted to 16 kHz mono. Saved as a temporary FLAC in the notebook, and a lesson is created with `status: analyzing`.
 7. Lesson finished screen shows the duration. In the background: split into ~5-minute parts → each part to Whisper (Groq first if a Groq key is set, with the previous part's last words as context) → one transcript → the AI (plan + previous stopping point + open deferred topics + transcript) → memory JSON.
 8. Memory is saved → **audio deleted** → lesson `status: done`. The lesson list updates.
@@ -85,13 +85,12 @@ PRD ref: `prd.md > Recording a Lesson`.
 `speechToText(keys, blob, prompt?)` → text. Groq first when the teacher added a Groq key, OpenRouter when there is none or Groq fails. Used for lessons (part by part; on Groq, `prompt` = last ~200 characters of the previous part's text, for continuity) and for dictation.
 
 ### AI Calls (`src/lib/ai.ts`, transport in `src/lib/openrouter.ts`)
-Each function is one request with a strict JSON schema, reasoning off:
-- `planTurn(plan?, taught, files, message, asked?)` → plan + at most one question with options. Builds, changes or only asks. PRD ref: `prd.md > Space Setup (Space settings)`.
+One request with a strict JSON schema, reasoning off:
 - `analyzeLesson(plan, lastStop, openDeferred, transcript)` → `LessonMemory`. PRD ref: `prd.md > Lesson Analysis and Memory`.
 `openrouter.ts` turns each schema into strict form (every field required, empty values removed after the reply), because some models skip optional fields otherwise.
 
 ### Assistant Agent (`src/lib/agent.ts`)
-`runAgent(key, history, said, env)` runs a tool loop with the Vercel AI SDK (`ai` + `@openrouter/ai-sdk-provider`, GPT-6 Luna, reasoning off, at most 8 steps). Tools: `read_space`, `create_space`, `open_space`, `rename_space`, `set_topics`, `set_routine`, `start_recording`, `delete_space`. Tools write to Dexie directly; `delete_space` only returns a pending delete that the panel confirms. Taught topics cannot be removed (`set_topics` rejects it). The model sees what is on screen and one line per space; the conversation history stays until the panel closes. PRD ref: `prd.md > Stretch Goals Added During the Build`.
+`runAgent(key, history, said, env)` runs a tool loop with the Vercel AI SDK (`ai` + `@openrouter/ai-sdk-provider`, GPT-6 Luna, reasoning off, at most 8 steps). Tools: `read_space`, `create_space`, `open_space`, `rename_space`, `set_topics`, `set_routine`, `start_recording`, `delete_space`. Tools write to Dexie directly; `delete_space` only returns a pending delete that the panel confirms. Taught topics cannot be removed (`set_topics` rejects it). The model sees what is on screen and one line per space; the conversation history stays until the panel closes. On a space's plan screen `env.planOf` limits it to `read_space`, `set_topics`, `set_routine` and adds the planning rules (never guess the routine; ask before using a new document on an existing plan; a cancelled week moves the start date); attached PDFs and images go to the model as file parts. PRD ref: `prd.md > Space Setup (Space settings)`. PRD ref: `prd.md > Stretch Goals Added During the Build`.
 
 ### Analysis Runner (`src/lib/analysis.ts`)
 Runs steps 7–8 of the journey for one lesson and updates `lesson.status`. It keeps running while the teacher moves between screens. When the app starts, any lesson still `analyzing` with audio saved is resumed. On error: `status: failed` + message; audio is kept for **Retry**.
@@ -100,8 +99,8 @@ Runs steps 7–8 of the journey for one lesson and updates `lesson.status`. It k
 Pure functions with no AI: `nextTopic(plan, lastStop)`, `threadCard(space)` → stopping point + deferred topics where `topicId === nextTopic.id`, `upcomingLessons(spaces)` for notifications and sorting.
 PRD ref: `prd.md > The Thread Card`, `prd.md > Start Screen Notifications`, `prd.md > Spaces`.
 
-### Composer (`src/components/Composer.tsx`)
-Attach file (PDF/image), text box, mic button (dictation via Whisper). Checks the document limit before sending.
+### Agent Chat (`src/components/AgentChat.tsx`)
+The conversation UI shared by the assistant panel and the plan screen: big mic (voice first), "type instead" field, change chips under replies, delete confirm card, and on the plan screen an attach link. Checks the document limit before sending.
 
 ## Data Model
 All in IndexedDB (Dexie). Everything persists between visits except audio.
@@ -135,7 +134,7 @@ teach-and-go/
 │   │   ├── tokens.css        # colors, font, spacing from the chosen design
 │   │   └── global.css
 │   ├── screens/              # one file per screen (see Components > Screens)
-│   ├── components/           # Composer, ThreadCard, LessonRow, Button, Loading...
+│   ├── components/           # AgentChat, Assistant, ThreadCard, LessonRow, PlanView...
 │   └── lib/
 │       ├── db.ts             # Dexie notebook
 │       ├── settings.ts

@@ -106,14 +106,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .btn-soft { background: var(--surface); border: var(--border); color: var(--text); }
 .row-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); }
 
-/* Composer */
-.composer { display: flex; flex-direction: column; gap: var(--space-1); margin-top: auto; }
-.composer textarea { resize: vertical; }
-.composer-actions { display: grid; grid-template-columns: 1fr auto 2fr; gap: var(--space-1); }
-.composer-actions:not(:has(input[type=file])) { grid-template-columns: auto 1fr; }
-.mic { width: 56px; display: grid; place-items: center; }
-.mic.live { background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
-.composer-actions .btn { padding: 14px; }
+/* Attachments */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { background: var(--sky); border: var(--border); border-radius: 999px; padding: 4px 12px; font-size: 14px; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -168,7 +161,6 @@ span.chip { cursor: default; }
   .desktop-only { display: block; }
   .space-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-4); align-items: start; }
   .space-grid .thread-stop { font-size: 34px; }
-  .composer { margin-top: 0; }
   .shell-main .hero { min-height: 50vh; }
 }
 
@@ -227,18 +219,6 @@ span.chip { cursor: default; }
 .notif-text .muted { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 body:has(.rec-bar) .screen { padding-bottom: 96px; }
 
-/* AI question with tap-able answers */
-.question { display: flex; flex-direction: column; gap: 10px; background: var(--soft); border: var(--border); border-radius: var(--radius); padding: 14px; }
-.question-text { font-weight: var(--weight-bold); }
-.options { display: flex; flex-direction: column; gap: 8px; }
-.option {
-  display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
-  background: var(--surface); color: var(--text); font: inherit; font-size: 15px;
-  border: var(--border); border-radius: var(--radius); padding: 10px 12px;
-}
-.option:hover:not(:disabled) { background: var(--accent); }
-.option:disabled { opacity: 0.5; }
-.option-key { flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 6px; border: 1.5px solid var(--text); font-size: 12px; font-weight: var(--weight-bold); }
 .schedule-line { font-weight: var(--weight-bold); }
 
 /* Schedule */
@@ -305,3 +285,7 @@ body:has(.rec-bar) .screen { padding-bottom: 96px; }
 .turn.assistant { align-items: flex-start; }
 .agent-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .agent-actions li { font-size: 13px; padding: 3px 10px; border: var(--border); border-radius: 999px; background: var(--soft, var(--surface)); }
+.chips .chip-send { width: auto; padding: 4px 14px; min-height: 0; font-size: 14px; }
+
+/* Plan screen: the plan on top, the conversation that shapes it below. */
+.plan-chat { display: flex; flex-direction: column; gap: 10px; }

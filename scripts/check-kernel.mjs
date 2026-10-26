@@ -3,6 +3,7 @@
 // Usage: node scripts/check-kernel.mjs <screenshot-dir>
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
+import { planChat } from './plan-chat.mjs'
 
 const SP = process.argv[2] ?? '.'
 const { OPENROUTER_KEY, GROQ_KEY = '' } = loadEnv()
@@ -23,13 +24,11 @@ await p.goto(U + '#/spaces')
 await p.click('button:visible:text("New space")')
 await p.fill('input[name=name]:visible', 'Maya')
 await p.click('button:visible:text("Create")')
-await p.click('[aria-label="Space settings"]')
-await p.setInputFiles('input[type=file]', 'demo/curriculum.pdf')
-await p.click('button[type=submit]')
-await p.waitForSelector('text=Confirm', { timeout: 60000 })
-await p.click('text=Confirm')
 await p.waitForURL(/#\/space\/[^/]+$/)
 const spaceUrl = p.url()
+await p.click('[aria-label="Space settings"]')
+await planChat(p, { file: 'demo/curriculum.pdf', text: 'Lessons are on Tuesday and Friday at 19:00' })
+await p.goto(spaceUrl)
 
 await p.click('text=New recording')
 await p.setInputFiles('input[type=file]', 'demo/lecture.m4a')

@@ -59,8 +59,8 @@ A space is one student or one class, with its own memory.
 - [ ] Each space's memory is separate: lessons in one space never appear in another.
 
 ### Space Setup (Space settings)
-Source: `scope.md > The Core Loop` step 2. Not a free chatbot: one composer, short AI replies.
-- The composer accepts: a document, a screenshot, a photo, and text. Text can be typed or dictated (voice becomes text before sending). Any of these alone or together.
+Source: `scope.md > The Core Loop` step 2. *(Built as a short conversation with the agent — see Stretch Goals.)* Not a free chatbot: it only shapes this space's plan, with short replies.
+- The plan conversation accepts: a document, a screenshot, a photo, and spoken or typed text. Any of these alone or together.
 - [ ] Sending a curriculum document returns the AI's short summary of the plan with confirm/correct buttons.
 - [ ] If the curriculum has dates, the AI uses them; if not, it asks how often lessons happen and offers to make a plan.
 - [ ] A document over the size limit is rejected with a clear message (e.g. "Document too long — upload only the curriculum pages").
@@ -105,9 +105,9 @@ After the lesson ends, the AI reads the lesson text against the plan and saves t
 
 ## Product Decisions
 - Name **Teach&Go**, slogan "Teach and go. We keep the thread." — learner's choice.
-- **No agent framework** (pi agent dropped). Simple, direct AI calls with low thinking effort — fewer tokens, so free limits go further. Supersedes the pi agent note in `scope.md > Inspiration & Identity`.
+- **No heavy agent framework** (pi agent dropped). Lesson analysis is one direct AI call with reasoning off. The assistant and plan conversation use a small tool loop from the Vercel AI SDK (added during the build, see Stretch Goals). Supersedes the pi agent note in `scope.md > Inspiration & Identity`.
 - **Bring your own OpenRouter key (optional free Groq key)** — keeps the app free and open source, with no server and no shared bill.
-- **Composer instead of a chatbot** — avoids long conversations that use up free limits.
+- **A focused conversation, not a chatbot** — first a single composer; during the build the plan screen became a short conversation with the agent that can only change this space's plan.
 - **Document size limit** — big documents are rejected rather than breaking free limits.
 - **Short covered-topics summaries** — output tokens cost too.
 - **Stopping point and deferred topics stored separately** — the stopping point is for the next lesson; deferred topics may belong to a later one.
@@ -130,7 +130,7 @@ None of these were in the original POC — they were kept out so the kernel (the
 - **A recording that never gets lost** — the teacher can leave the recording screen to read last lesson's notes; recording keeps going, and a bar at the bottom of every screen shows the time and leads back. **Pause / Resume** for breaks.
 - **One bell for upcoming lessons** — a teacher with many students got a stack of notices on the Start screen; they are now one notification menu with a count.
 - **The routine is never guessed** — tutors teach every day, every few days, twice a day, mornings or evenings. The AI fills only what the document or the teacher says; if the routine is unknown, it asks. Weekly slots with times, "every N days", twice a day, and a start date are all supported.
-- **Questions as options, not chat** — every AI question comes with 2–4 tap-able answers (A, B, C…) and the teacher can still write their own. Fast on a phone, fewer tokens, no free-form chat.
+- **Plan setup as a conversation** — first, every AI question came with 2–4 tap-able answers. In testing, real routines ("Mon and Wed before noon, Fri afternoon") did not fit buttons, so the plan screen became the same voice-first conversation as the assistant: send the curriculum or a photo, or just talk. The agent saves topics and routine as it goes, never guesses the routine, asks before using a new document on an existing plan, and keeps taught topics. "No lesson this week, we start next week" moves the routine's start date.
 - **Safe new documents** — adding a new PDF to a space that already has a plan never overwrites it silently. The AI gets the current plan, what was already taught, and the new document; with no clear instruction it leaves the plan as it is and asks what to do (add after / replace what's not taught yet / add detail). Taught topics are never removed.
 - **Schedule view** — a timeline of when each topic will be taught, projected from the routine: done, next, and later lessons, with estimated dates marked as such.
 - **Voice assistant on every screen** — tap the sparkle, speak ("Create a space called Alex with Maya's topics", "Make the chain rule topic more detailed"). The conversation continues in a panel with a mic until the teacher closes it, and the assistant knows what is on screen. It is a small agent: for one message it can use several of the app's tools in a row (create two spaces, then write topics into one of them; read a plan, then change it). Changes apply right away and are listed as small chips under the reply; only deleting waits for a confirm tap. Every reply is written by the model in the language of the teacher's latest message.

@@ -1,5 +1,5 @@
 // Slice 5 checks in the browser, with Chrome's fake microphone playing a WAV file:
-// live recording → analysis; composer dictation; bad key → failed + audio kept → Retry; reload during analysis resumes.
+// live recording → analysis; bad key → failed + audio kept → Retry; reload during analysis resumes.
 // Usage: node scripts/check-recording.mjs <fake-mic.wav> <screenshot-dir>
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
@@ -47,14 +47,6 @@ await p.click('button:visible:text("Create")')
 await p.waitForURL(/#\/space\/[^/]+$/)
 const spaceUrl = p.url()
 
-// 1. Dictation in the composer.
-await p.click('[aria-label="Space settings"]')
-await p.click('[aria-label="Dictate"]')
-await p.waitForTimeout(8000)
-await p.click('[aria-label="Stop dictation"]')
-await p.waitForFunction(() => document.querySelector('textarea').value.length > 10, null, { timeout: 30000 })
-result.dictation = await p.inputValue('textarea')
-
 // 2. Live recording → analysis done, audio deleted.
 await p.goto(spaceUrl)
 await p.click('text=New recording')
@@ -101,7 +93,6 @@ result.speechHosts = [...new Set(speechHosts)]
 console.log(result, errs)
 await b.close()
 const ok =
-  /derivative|rule|Maya/i.test(result.dictation) &&
   result.liveAudioLeft === 0 &&
   /Nothing was lost/.test(result.failedText) &&
   result.failedAudioKept === 1 &&

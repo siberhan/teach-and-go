@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { today, WEEKDAYS_LONG, withIds } from './ai.ts'
 import { db, type Lesson, type Plan, type Schedule, type Space } from './db.ts'
 import { shortDate } from './format.ts'
-import { llm } from './openrouter.ts'
+import { llm, type Attachment } from './openrouter.ts'
 import { describeSchedule, scheduleOf } from './schedule.ts'
 import { createSpace } from './spaces.ts'
 import { lastDoneLesson, nextTopic, progressIndex } from './thread.ts'
@@ -25,6 +25,7 @@ export interface PendingDelete {
 
 export interface AgentEnv {
   screen: string // what the teacher is looking at
+  planOf?: Space // set on a space's plan screen: the agent only works on this plan
   currentSpaceId?: string
   navigate: (path: string) => void
   startRecording: (spaceId: string) => Promise<void>
@@ -60,7 +61,7 @@ function spaceLine(s: Space, lessons: Lesson[]) {
   return `- ${s.name}: ${lessons.length} lessons; last stopped at: ${last?.stoppingPoint?.text ?? '-'}; next topic: ${nextTopic(s.plan, last?.stoppingPoint)?.title ?? '-'}; plan: ${s.plan ? `${s.plan.topics.length} topics` : 'none'}; routine: ${describeSchedule(scheduleOf(s.plan)) ?? 'unknown'}`
 }
 
-export async function runAgent(key: string, history: ModelMessage[], said: string, env: AgentEnv): Promise<AgentReply> {
+export async function runAgent(key: string, history: ModelMessage[], said: string, env: AgentEnv, files: Attachment[] = []): Promise<AgentReply> {
   const spaces = await db.spaces.toArray()
   const lessons = await db.lessons.toArray()
   const actions: string[] = []
@@ -82,6 +83,7 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
         return {
           name: s.name,
           routine: describeSchedule(scheduleOf(s.plan)) ?? 'unknown',
+          schedule: scheduleOf(s.plan) ?? null, // as set_routine takes it
           summary: s.plan?.summary,
           topics: s.plan?.topics.map((t, i) => ({ title: t.title, lessons: t.lessons, date: t.date, taught: i < taught })) ?? 'no plan yet',
           recentLessons: mine.slice(-5).map((l) => ({ date: shortDate(l.createdAt), stoppedAt: l.stoppingPoint?.text, covered: l.covered, postponed: l.deferred?.filter((d) => !d.resolved).map((d) => d.text) })),
@@ -144,7 +146,7 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
       },
     }),
     set_routine: tool({
-      description: "Set when a space's lessons happen. Only what the teacher said; never guess days or times — ask instead.",
+      description: "Set when a space's lessons happen; replaces the whole routine, so send the days and times you keep too. Only what the teacher said; never guess days or times — ask instead.",
       inputSchema: z.object({ space: z.string(), schedule: scheduleInput }),
       execute: async ({ space, schedule }) => {
         const s = await find(space)
@@ -186,7 +188,8 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
   const now = new Date()
   const instructions = `You are the assistant inside Teach&Go, an app for tutors that remembers where each lesson stopped. Each student or class is a "space" with a plan (ordered topics + a routine) and recorded lessons.
 Use the tools to do what the teacher asks — several tools in a row when needed (e.g. create two spaces, or create a space and then set its topics). Then reply in 1–3 short sentences of plain text (no Markdown).
-- Do not describe changes you did not make with a tool. The app lists your changes under your reply, so do not repeat every detail.
+- Never say you saved, noted or changed something unless a tool did it in this message — the app keeps nothing else. The app lists your changes under your reply, so do not repeat every detail.
+- Cancelled or moved lessons ("no lesson this week, we start next week"): there is no single-lesson cancel; read the space, then call set_routine with the same days and times and startDate = the first lesson day after the break.
 - Never guess a routine, a space name or which space is meant: ask one short question instead.
 - "this space"/"here" = the space on screen. Use exact space names.
 - To change topics of a space that has a plan, read it first, then send the full new list.
@@ -195,21 +198,33 @@ Today is ${today()} (${WEEKDAYS_LONG[now.getDay()]}).
 On screen: ${env.screen}
 Spaces:
 ${spaces.map((s) => spaceLine(s, lessons.filter((l) => l.spaceId === s.id && l.status === 'done'))).join('\n') || '(none yet)'}
+${env.planOf ? planRules(env.planOf.name) : ''}
 The teacher's latest message is: "${said}". Your reply and any question you write in a tool must be in the language of THAT message, even if earlier messages were in another language.`
 
   const openrouter = createOpenRouter({ apiKey: key, headers: { 'X-Title': 'Teach&Go' } })
   // The language reminder rides on the message itself: a reminder in the instructions alone loses to a long history in another language.
-  const messages: ModelMessage[] = [...history, { role: 'user', content: `${said}\n\n(Reply in the language of this message.)` }]
+  const text = `${said || '(sent a document)'}\n\n(Reply in the language of this message.)`
+  const parts = await Promise.all(files.map(async (f) => ({ type: 'file' as const, data: new Uint8Array(await f.data.arrayBuffer()), mediaType: f.mimeType, filename: f.name })))
+  const messages: ModelMessage[] = [...history, { role: 'user', content: parts.length ? [{ type: 'text', text }, ...parts] : text }]
   const result = await generateText({
     model: openrouter(llm.model),
     instructions,
     messages,
     tools,
+    activeTools: env.planOf ? ['read_space', 'set_topics', 'set_routine'] : undefined,
     stopWhen: stepCountIs(MAX_STEPS),
     providerOptions: { openrouter: { reasoning: { effort: 'none' } } },
   })
   return { text: result.text.trim(), actions, messages: [...messages, ...result.response.messages], pendingDelete, recordingStarted }
 }
+
+// On a space's plan screen the conversation sets up or changes that one plan, from documents, photos or talk.
+const planRules = (name: string) => `
+You are on the plan screen of the space "${name}". Set up or change its plan with the teacher:
+- Topics come from attached documents or photos, or from what the teacher says. If there is no topic list anywhere, propose a short sensible one and say it is a proposal they can change.
+- NEVER guess the routine — tutors teach every day, every few days, on some weekdays, twice a day, mornings or evenings. Save only what was said. While it is unknown, end your reply with one short question about it (how often, which days, what time); you may suggest 2–4 common answers in the sentence. A start date is optional: without one, lessons start from today — do not ask for it.
+- A new document while "${name}" already has topics and the teacher did not say what to do with it: change nothing and ask whether to add its topics after the current ones, replace the topics not taught yet, or only add detail to existing topics.
+- Read the space first when it already has a plan.`
 
 // Deleting happens only after the teacher taps the button.
 export async function deleteSpace(space: Space) {

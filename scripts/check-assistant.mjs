@@ -1,9 +1,10 @@
-// Browser check with real AI: plan setup asks about the routine with options → tap one → Schedule shows dated topics;
+// Browser check with real AI: the plan conversation asks about the routine → the answer saves it → Schedule shows dated topics;
 // the assistant agent by voice (fake mic) creates "Alex" with Maya's topics; typed commands answer, open, edit topics,
 // create two spaces from one non-English message (reply in that language), fill an empty space's topics, rename, and delete two spaces after one tap.
 // Usage: node scripts/check-assistant.mjs <spoken-command.wav> <screenshot-dir>
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
+import { planChat } from './plan-chat.mjs'
 
 const [wav, SP = '.'] = process.argv.slice(2)
 const { OPENROUTER_KEY, GROQ_KEY = '' } = loadEnv()
@@ -41,28 +42,12 @@ await p.click('button:visible:text("Create")')
 await p.waitForURL(/#\/space\/[^/]+$/)
 const mayaUrl = p.url()
 
-// Setup: the AI asks about the routine with options.
+// Setup in the plan conversation: the curriculum alone → the agent asks about the routine; the answer saves it.
 await p.click('[aria-label="Space settings"]')
-await p.setInputFiles('input[type=file]', 'demo/curriculum.pdf')
-await p.click('button[type=submit]')
-await p.waitForSelector('.question', { timeout: 60000 })
-r.question = await p.innerText('.question-text')
-r.options = await p.$$eval('.option', (x) => x.map((o) => o.innerText.replace(/\n/g, ' ')))
-await p.screenshot({ path: SP + '/a-question.png', fullPage: true })
-// Tap the first option until the routine is known (the AI may ask a follow-up, e.g. days after frequency).
-r.rounds = 0
-while (!(await p.$('.schedule-line')) && r.rounds < 3) {
-  r.asked = [...(r.asked ?? []), (await p.innerText('.question-text')) + ' → ' + (await p.innerText('.option >> nth=0'))]
-  await p.click('.option >> nth=0')
-  r.rounds++
-  await p.waitForTimeout(500)
-  await p.waitForSelector('button[type=submit]:text-is("Send")', { timeout: 60000 })
-}
-await p.screenshot({ path: SP + '/a-answered.png', fullPage: true })
-console.log(r.asked)
+r.ask = await planChat(p, { file: 'demo/curriculum.pdf' })
+await planChat(p, { text: 'Every day at 17:00' })
 r.routine = await p.innerText('.schedule-line')
-await p.click('text=Confirm')
-await p.waitForURL(/#\/space\/[^/]+$/)
+await p.goto(mayaUrl)
 await p.click('text=Schedule')
 await p.waitForSelector('.timeline')
 r.timeline = await p.$$eval('.timeline li', (x) => x.slice(0, 3).map((l) => l.innerText.replace(/\n/g, ' ')))
@@ -134,7 +119,7 @@ console.log(JSON.stringify(r, null, 1), errs)
 await b.close()
 const notEnglish = (t) => /[çğıöşü]/i.test(t) && !/\b(the|created|anything)\b/i.test(t)
 const ok =
-  r.options.length >= 2 && r.routine && !/No routine/.test(r.routine) &&
+  /\?/.test(r.ask) && /Every day/.test(r.routine) &&
   r.timeline.length === 3 && !r.timeline.some((t) => t.startsWith('—')) &&
   /alex/i.test(r.said) && r.alexTopics >= 6 && !(r.alexSchedule?.slots?.length || r.alexSchedule?.everyDays) && r.stillOpen &&
   r.countAfterNoName === 2 && r.mehmet && /Maya/.test(r.answer) && r.openedMaya && r.mayaTopics[1] > r.mayaTopics[0] &&

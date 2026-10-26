@@ -5,7 +5,7 @@
 Teach&Go remembers where each lesson stopped — and every "I'll explain this later" — so a tutor or teacher starts the next lesson exactly where they left off.
 
 1. Create a **space** for a student or a class.
-2. Send your curriculum (PDF, photo or a short note). The AI turns it into a plan you confirm with one tap.
+2. Send your curriculum (PDF, photo or a short note) in the plan conversation, by voice or text. The AI turns it into a plan and asks about your lesson routine instead of guessing it.
 3. Tap **record** at the start of a lesson (or upload a recording).
 4. Next time you open the space, the **thread card** tells you where to start — and reminds you of a postponed topic when today's lesson is the right time for it.
 
@@ -36,7 +36,7 @@ Install it like an app: in Chrome, use **Install app** in the address bar (deskt
 - **React + TypeScript + Vite**, installable as a PWA.
 - **Whisper large v3** turns lesson audio into text — through [OpenRouter](https://openrouter.ai), or Groq's free tier first if you add a Groq key. Audio is recorded as 16 kHz mono FLAC in the browser ([libflac.js](https://github.com/mmig/libflac.js), MIT) and split into overlapping ~5-minute parts.
 - **GPT-6 Luna** (through OpenRouter, reasoning off, strict JSON output) reads the curriculum once into a plan, asks about your routine instead of guessing it, and after each lesson returns covered topics, the stopping point and postponed topics — each linked to a plan topic.
-- A **voice assistant** on every screen turns what you say into one app action, with a confirmation before anything changes.
+- A **voice assistant** on every screen: a small agent that uses the app's tools (create, open, rename, plan, record, delete after a tap) and answers in your language.
 - The thread card is computed locally with no AI call: the next planned topic plus any postponed topic linked to it.
 
 Code map: screens in `src/screens/`, logic in `src/lib/` (`analysis.ts` runs the background lesson analysis, `thread.ts` builds the thread card), planning docs in `devpost/`.
