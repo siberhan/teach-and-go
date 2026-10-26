@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mascot Preview</title>
+<style>
+  :root { --bg:#e6e8fa; --ink:#22213a; --accent:#6c6fd8; --muted:#6b6a85; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; background:var(--bg); color:var(--ink); font:16px/1.5 -apple-system, system-ui, sans-serif; display:flex; flex-direction:column; align-items:center; padding:24px 16px; gap:16px; }
+  h1 { margin:0; font-size:22px; }
+  .stage { position:relative; width:min(520px, 90vw); aspect-ratio:1; }
+  .stage img { position:absolute; inset:0; width:100%; height:100%; opacity:0; }
+  .stage img.on { opacity:1; }
+  .bar { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:999px; padding:10px 18px; font-size:15px; cursor:pointer; }
+  button.ghost { background:#fff; color:var(--ink); }
+  .meter { width:min(520px, 90vw); height:8px; background:#fff; border-radius:99px; overflow:hidden; }
+  .meter div { height:100%; width:0; background:var(--accent); }
+  p { margin:0; color:var(--muted); text-align:center; max-width:560px; }
+</style>
+</head>
+<body>
+  <h1>Maskot konuşma testi</h1>
+  <div class="stage" id="stage">
+    <img data-k="base" src="base.png" class="on" alt="">
+    <img data-k="mid" src="m-b.png" alt="">
+    <img data-k="wide" src="m-a.png" alt="">
+    <img data-k="blink" src="blink.png" alt="">
+    <img data-k="present" src="present.png" alt="">
+  </div>
+  <div class="meter"><div id="lvl"></div></div>
+  <div class="bar">
+    <button id="mic">🎙 Mikrofonla konuş</button>
+    <button id="clip" class="ghost">▶ Örnek konuşma</button>
+    <button id="present" class="ghost">👋 Sözü ver pozu</button>
+  </div>
+  <p>Ses yüksekliği ağzı seçer: sessiz → kapalı, orta → yarım açık, yüksek → tam açık. Arada kendiliğinden göz kırpar. Videoda aynı kural, Schedar sesiyle çalışacak.</p>
+<script>
+  const imgs = Object.fromEntries([...document.querySelectorAll('#stage img')].map((i) => [i.dataset.k, i]))
+  const lvl = document.getElementById('lvl')
+  let ctx, analyser, data, source, presenting = false, blinkUntil = 0, nextBlink = performance.now() + 2500
+  let smooth = 0, current = 'base', lastSwitch = 0
+
+  function show(k) {
+    if (k === current) return
+    imgs[current].classList.remove('on'); imgs[k].classList.add('on'); current = k
+  }
+
+  function setup() {
+    if (ctx) return
+    ctx = new (window.AudioContext || window.webkitAudioContext)()
+    analyser = ctx.createAnalyser(); analyser.fftSize = 1024
+    data = new Uint8Array(analyser.fftSize)
+  }
+
+  function tick(t) {
+    let level = 0
+    if (analyser) {
+      analyser.getByteTimeDomainData(data)
+      let sum = 0
+      for (const v of data) { const x = (v - 128) / 128; sum += x * x }
+      level = Math.sqrt(sum / data.length)
+    }
+    smooth = smooth * 0.5 + level * 0.5
+    lvl.style.width = Math.min(100, smooth * 600) + '%'
+
+    if (t > nextBlink) { blinkUntil = t + 130; nextBlink = t + 2500 + Math.random() * 3000 }
+    let k = smooth > 0.09 ? 'wide' : smooth > 0.035 ? 'mid' : 'base'
+    if (k === 'base' && t < blinkUntil) k = 'blink'
+    if (presenting) k = 'present'
+    // About 12 mouth changes per second, like hand-drawn animation.
+    if (t - lastSwitch > 80 || k === 'present') { show(k); lastSwitch = t }
+    requestAnimationFrame(tick)
+  }
+  requestAnimationFrame(tick)
+
+  function connect(node) { source?.disconnect(); source = node; source.connect(analyser) }
+
+  document.getElementById('mic').onclick = async () => {
+    setup(); await ctx.resume()
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      connect(ctx.createMediaStreamSource(stream))
+      document.getElementById('mic').textContent = '🎙 Dinliyor…'
+    } catch (e) { alert('Mikrofon izni verilmedi: ' + e.message) }
+  }
+
+  const audio = new Audio('test.mp3'); let clipNode
+  document.getElementById('clip').onclick = async () => {
+    setup(); await ctx.resume()
+    if (!clipNode) { clipNode = ctx.createMediaElementSource(audio); clipNode.connect(ctx.destination) }
+    connect(clipNode)
+    audio.currentTime = 0; audio.play()
+  }
+
+  document.getElementById('present').onclick = () => { presenting = !presenting }
+</script>
+</body>
+</html>

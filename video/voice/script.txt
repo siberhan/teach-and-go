@@ -1,0 +1,11 @@
+So... where did we stop last time? <short pause> Every teacher has asked this. Every single week. <long pause>
+Teach and Go is for anyone who teaches. Tutors, teachers, coaches. Make a space for each student or class. Send your curriculum. It becomes a clear plan, topic by topic. <long pause>
+When the lesson starts, tap record. Then just teach. You can pause, or even leave the screen. When you stop, it listens to the whole lesson. <long pause>
+Next time, the app tells you where to start. And that topic you said you'd explain later? It becomes a reminder. Right there, on the first card. <long pause>
+Every lesson keeps its notes. What you covered. Where you stopped. What you left for later. <long pause>
+In the schedule, finished topics are crossed out. The next ones get their dates. <long pause>
+And the bell shows every lesson coming up. Who, when, and what's next. <long pause>
+But there's one more thing. Our developer will show you. Over to you! <long pause>
+Thanks! So, what's under the hood? GPT-6 Luna for the thinking, and Whisper for listening. A 30-minute lesson costs about one and a half cents. Cheaper than a coffee. Much cheaper. <long pause>
+And it's open source. Want to try it? Open the website, and add it to your home screen. Paste your own API key, and you're ready. No account. No server. <long pause>
+You teach. We keep the thread. Teach and Go.

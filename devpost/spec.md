@@ -52,7 +52,7 @@ Verify early in the build (could change the plan):
 - The user needs their own **OpenRouter** API key (and optionally a free **Groq** key), entered in Settings. No `.env` file and no keys in the repo.
 - Local: `npm install` → `npm run dev` → open `http://localhost:5173`.
 - **Deploy (learner's choice): GitHub Pages**, a free public link. Build with `npm run build`, publish `dist/` with a GitHub Actions workflow. Vite `base` is `./`, so it works under any repo name.
-- **Shared at:** repository https://github.com/siberhan/teach-and-go · live app https://siberhan.me/teach-and-go/ · demo video: (to add).
+- **Shared at:** repository https://github.com/siberhan/teach-and-go · live app https://siberhan.me/teach-and-go/ · demo video https://youtu.be/3A9vew0wNSU.
 - Demo recording: create a space, send a curriculum in the plan conversation and answer the routine question, upload the TTS lecture on the New recording screen, wait for analysis, reopen the space to show the Thread card with the stopping point and the deferred reminder.
 - Submission also needs the demo video (English or English subtitles) and a public repo with an open-source license (e.g. MIT).
 

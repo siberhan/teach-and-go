@@ -1,0 +1,2692 @@
+{
+ "audio": "voiceover.wav",
+ "duration": 88.56,
+ "source": "script",
+ "words": [
+  {
+   "text": "So...",
+   "start": 0.3,
+   "end": 0.5,
+   "startFrame": 9,
+   "endFrame": 15
+  },
+  {
+   "text": "where",
+   "start": 1.0,
+   "end": 1.2,
+   "startFrame": 30,
+   "endFrame": 36
+  },
+  {
+   "text": "did",
+   "start": 1.2,
+   "end": 1.4,
+   "startFrame": 36,
+   "endFrame": 42
+  },
+  {
+   "text": "we",
+   "start": 1.4,
+   "end": 1.6,
+   "startFrame": 42,
+   "endFrame": 48
+  },
+  {
+   "text": "stop",
+   "start": 1.6,
+   "end": 2.0,
+   "startFrame": 48,
+   "endFrame": 60
+  },
+  {
+   "text": "last",
+   "start": 2.0,
+   "end": 2.3,
+   "startFrame": 60,
+   "endFrame": 69
+  },
+  {
+   "text": "time?",
+   "start": 2.3,
+   "end": 2.6,
+   "startFrame": 69,
+   "endFrame": 78
+  },
+  {
+   "text": "Every",
+   "start": 3.1,
+   "end": 3.4,
+   "startFrame": 93,
+   "endFrame": 102
+  },
+  {
+   "text": "teacher",
+   "start": 3.4,
+   "end": 3.8,
+   "startFrame": 102,
+   "endFrame": 114
+  },
+  {
+   "text": "has",
+   "start": 3.8,
+   "end": 4.0,
+   "startFrame": 114,
+   "endFrame": 120
+  },
+  {
+   "text": "asked",
+   "start": 4.0,
+   "end": 4.2,
+   "startFrame": 120,
+   "endFrame": 126
+  },
+  {
+   "text": "this.",
+   "start": 4.2,
+   "end": 4.5,
+   "startFrame": 126,
+   "endFrame": 135
+  },
+  {
+   "text": "Every",
+   "start": 4.6,
+   "end": 5.2,
+   "startFrame": 138,
+   "endFrame": 156
+  },
+  {
+   "text": "single",
+   "start": 5.2,
+   "end": 5.5,
+   "startFrame": 156,
+   "endFrame": 165
+  },
+  {
+   "text": "week.",
+   "start": 5.5,
+   "end": 5.7,
+   "startFrame": 165,
+   "endFrame": 171
+  },
+  {
+   "text": "Teach",
+   "start": 7.2,
+   "end": 7.4,
+   "startFrame": 216,
+   "endFrame": 222
+  },
+  {
+   "text": "and",
+   "start": 7.4,
+   "end": 7.6,
+   "startFrame": 222,
+   "endFrame": 228
+  },
+  {
+   "text": "Go",
+   "start": 7.6,
+   "end": 7.8,
+   "startFrame": 228,
+   "endFrame": 234
+  },
+  {
+   "text": "is",
+   "start": 7.8,
+   "end": 8.0,
+   "startFrame": 234,
+   "endFrame": 240
+  },
+  {
+   "text": "for",
+   "start": 8.0,
+   "end": 8.3,
+   "startFrame": 240,
+   "endFrame": 249
+  },
+  {
+   "text": "anyone",
+   "start": 8.3,
+   "end": 8.7,
+   "startFrame": 249,
+   "endFrame": 261
+  },
+  {
+   "text": "who",
+   "start": 8.7,
+   "end": 8.8,
+   "startFrame": 261,
+   "endFrame": 264
+  },
+  {
+   "text": "teaches.",
+   "start": 8.8,
+   "end": 9.4,
+   "startFrame": 264,
+   "endFrame": 282
+  },
+  {
+   "text": "Tutors,",
+   "start": 9.6,
+   "end": 10.3,
+   "startFrame": 288,
+   "endFrame": 309
+  },
+  {
+   "text": "teachers,",
+   "start": 10.4,
+   "end": 10.8,
+   "startFrame": 312,
+   "endFrame": 324
+  },
+  {
+   "text": "coaches.",
+   "start": 10.8,
+   "end": 11.4,
+   "startFrame": 324,
+   "endFrame": 342
+  },
+  {
+   "text": "Make",
+   "start": 11.8,
+   "end": 12.0,
+   "startFrame": 354,
+   "endFrame": 360
+  },
+  {
+   "text": "a",
+   "start": 12.0,
+   "end": 12.1,
+   "startFrame": 360,
+   "endFrame": 363
+  },
+  {
+   "text": "space",
+   "start": 12.1,
+   "end": 12.6,
+   "startFrame": 363,
+   "endFrame": 378
+  },
+  {
+   "text": "for",
+   "start": 12.6,
+   "end": 12.8,
+   "startFrame": 378,
+   "endFrame": 384
+  },
+  {
+   "text": "each",
+   "start": 12.8,
+   "end": 13.1,
+   "startFrame": 384,
+   "endFrame": 393
+  },
+  {
+   "text": "student",
+   "start": 13.1,
+   "end": 13.5,
+   "startFrame": 393,
+   "endFrame": 405
+  },
+  {
+   "text": "or",
+   "start": 13.5,
+   "end": 13.6,
+   "startFrame": 405,
+   "endFrame": 408
+  },
+  {
+   "text": "class.",
+   "start": 13.6,
+   "end": 14.2,
+   "startFrame": 408,
+   "endFrame": 426
+  },
+  {
+   "text": "Send",
+   "start": 14.4,
+   "end": 14.7,
+   "startFrame": 432,
+   "endFrame": 441
+  },
+  {
+   "text": "your",
+   "start": 14.7,
+   "end": 14.8,
+   "startFrame": 441,
+   "endFrame": 444
+  },
+  {
+   "text": "curriculum.",
+   "start": 14.8,
+   "end": 15.5,
+   "startFrame": 444,
+   "endFrame": 465
+  },
+  {
+   "text": "It",
+   "start": 15.7,
+   "end": 15.8,
+   "startFrame": 471,
+   "endFrame": 474
+  },
+  {
+   "text": "becomes",
+   "start": 15.8,
+   "end": 16.1,
+   "startFrame": 474,
+   "endFrame": 483
+  },
+  {
+   "text": "a",
+   "start": 16.1,
+   "end": 16.1,
+   "startFrame": 483,
+   "endFrame": 483
+  },
+  {
+   "text": "clear",
+   "start": 16.1,
+   "end": 16.6,
+   "startFrame": 483,
+   "endFrame": 498
+  },
+  {
+   "text": "plan,",
+   "start": 16.6,
+   "end": 17.2,
+   "startFrame": 498,
+   "endFrame": 516
+  },
+  {
+   "text": "topic",
+   "start": 17.2,
+   "end": 17.8,
+   "startFrame": 516,
+   "endFrame": 534
+  },
+  {
+   "text": "by",
+   "start": 17.8,
+   "end": 18.0,
+   "startFrame": 534,
+   "endFrame": 540
+  },
+  {
+   "text": "topic.",
+   "start": 18.0,
+   "end": 18.4,
+   "startFrame": 540,
+   "endFrame": 552
+  },
+  {
+   "text": "When",
+   "start": 19.4,
+   "end": 19.6,
+   "startFrame": 582,
+   "endFrame": 588
+  },
+  {
+   "text": "the",
+   "start": 19.6,
+   "end": 19.6,
+   "startFrame": 588,
+   "endFrame": 588
+  },
+  {
+   "text": "lesson",
+   "start": 19.6,
+   "end": 19.9,
+   "startFrame": 588,
+   "endFrame": 597
+  },
+  {
+   "text": "starts,",
+   "start": 19.9,
+   "end": 20.4,
+   "startFrame": 597,
+   "endFrame": 612
+  },
+  {
+   "text": "tap",
+   "start": 20.5,
+   "end": 20.8,
+   "startFrame": 615,
+   "endFrame": 624
+  },
+  {
+   "text": "record.",
+   "start": 20.8,
+   "end": 21.3,
+   "startFrame": 624,
+   "endFrame": 639
+  },
+  {
+   "text": "Then",
+   "start": 21.7,
+   "end": 21.9,
+   "startFrame": 651,
+   "endFrame": 657
+  },
+  {
+   "text": "just",
+   "start": 21.9,
+   "end": 22.1,
+   "startFrame": 657,
+   "endFrame": 663
+  },
+  {
+   "text": "teach.",
+   "start": 22.1,
+   "end": 22.5,
+   "startFrame": 663,
+   "endFrame": 675
+  },
+  {
+   "text": "You",
+   "start": 22.7,
+   "end": 22.8,
+   "startFrame": 681,
+   "endFrame": 684
+  },
+  {
+   "text": "can",
+   "start": 22.8,
+   "end": 23.0,
+   "startFrame": 684,
+   "endFrame": 690
+  },
+  {
+   "text": "pause,",
+   "start": 23.0,
+   "end": 23.6,
+   "startFrame": 690,
+   "endFrame": 708
+  },
+  {
+   "text": "or",
+   "start": 23.6,
+   "end": 23.7,
+   "startFrame": 708,
+   "endFrame": 711
+  },
+  {
+   "text": "even",
+   "start": 23.8,
+   "end": 24.0,
+   "startFrame": 714,
+   "endFrame": 720
+  },
+  {
+   "text": "leave",
+   "start": 24.0,
+   "end": 24.3,
+   "startFrame": 720,
+   "endFrame": 729
+  },
+  {
+   "text": "the",
+   "start": 24.3,
+   "end": 24.4,
+   "startFrame": 729,
+   "endFrame": 732
+  },
+  {
+   "text": "screen.",
+   "start": 24.4,
+   "end": 24.8,
+   "startFrame": 732,
+   "endFrame": 744
+  },
+  {
+   "text": "When",
+   "start": 25.5,
+   "end": 25.6,
+   "startFrame": 765,
+   "endFrame": 768
+  },
+  {
+   "text": "you",
+   "start": 25.6,
+   "end": 25.7,
+   "startFrame": 768,
+   "endFrame": 771
+  },
+  {
+   "text": "stop,",
+   "start": 25.7,
+   "end": 26.2,
+   "startFrame": 771,
+   "endFrame": 786
+  },
+  {
+   "text": "it",
+   "start": 26.3,
+   "end": 26.5,
+   "startFrame": 789,
+   "endFrame": 795
+  },
+  {
+   "text": "listens",
+   "start": 26.5,
+   "end": 26.8,
+   "startFrame": 795,
+   "endFrame": 804
+  },
+  {
+   "text": "to",
+   "start": 26.8,
+   "end": 26.9,
+   "startFrame": 804,
+   "endFrame": 807
+  },
+  {
+   "text": "the",
+   "start": 26.9,
+   "end": 27.0,
+   "startFrame": 807,
+   "endFrame": 810
+  },
+  {
+   "text": "whole",
+   "start": 27.0,
+   "end": 27.4,
+   "startFrame": 810,
+   "endFrame": 822
+  },
+  {
+   "text": "lesson.",
+   "start": 27.4,
+   "end": 27.8,
+   "startFrame": 822,
+   "endFrame": 834
+  },
+  {
+   "text": "Next",
+   "start": 29.2,
+   "end": 29.6,
+   "startFrame": 876,
+   "endFrame": 888
+  },
+  {
+   "text": "time,",
+   "start": 29.6,
+   "end": 29.9,
+   "startFrame": 888,
+   "endFrame": 897
+  },
+  {
+   "text": "the",
+   "start": 30.1,
+   "end": 30.2,
+   "startFrame": 903,
+   "endFrame": 906
+  },
+  {
+   "text": "app",
+   "start": 30.2,
+   "end": 30.4,
+   "startFrame": 906,
+   "endFrame": 912
+  },
+  {
+   "text": "tells",
+   "start": 30.4,
+   "end": 30.6,
+   "startFrame": 912,
+   "endFrame": 918
+  },
+  {
+   "text": "you",
+   "start": 30.6,
+   "end": 30.7,
+   "startFrame": 918,
+   "endFrame": 921
+  },
+  {
+   "text": "where",
+   "start": 30.7,
+   "end": 30.9,
+   "startFrame": 921,
+   "endFrame": 927
+  },
+  {
+   "text": "to",
+   "start": 30.9,
+   "end": 31.0,
+   "startFrame": 927,
+   "endFrame": 930
+  },
+  {
+   "text": "start.",
+   "start": 31.0,
+   "end": 31.4,
+   "startFrame": 930,
+   "endFrame": 942
+  },
+  {
+   "text": "And",
+   "start": 32.0,
+   "end": 32.2,
+   "startFrame": 960,
+   "endFrame": 966
+  },
+  {
+   "text": "that",
+   "start": 32.2,
+   "end": 32.4,
+   "startFrame": 966,
+   "endFrame": 972
+  },
+  {
+   "text": "topic",
+   "start": 32.4,
+   "end": 32.8,
+   "startFrame": 972,
+   "endFrame": 984
+  },
+  {
+   "text": "you",
+   "start": 32.8,
+   "end": 32.9,
+   "startFrame": 984,
+   "endFrame": 987
+  },
+  {
+   "text": "said",
+   "start": 32.9,
+   "end": 33.1,
+   "startFrame": 987,
+   "endFrame": 993
+  },
+  {
+   "text": "you'd",
+   "start": 33.1,
+   "end": 33.2,
+   "startFrame": 993,
+   "endFrame": 996
+  },
+  {
+   "text": "explain",
+   "start": 33.2,
+   "end": 33.6,
+   "startFrame": 996,
+   "endFrame": 1008
+  },
+  {
+   "text": "later?",
+   "start": 33.6,
+   "end": 34.0,
+   "startFrame": 1008,
+   "endFrame": 1020
+  },
+  {
+   "text": "It",
+   "start": 34.3,
+   "end": 34.4,
+   "startFrame": 1029,
+   "endFrame": 1032
+  },
+  {
+   "text": "becomes",
+   "start": 34.4,
+   "end": 34.7,
+   "startFrame": 1032,
+   "endFrame": 1041
+  },
+  {
+   "text": "a",
+   "start": 34.7,
+   "end": 34.7,
+   "startFrame": 1041,
+   "endFrame": 1041
+  },
+  {
+   "text": "reminder.",
+   "start": 34.7,
+   "end": 35.2,
+   "startFrame": 1041,
+   "endFrame": 1056
+  },
+  {
+   "text": "Right",
+   "start": 35.3,
+   "end": 35.5,
+   "startFrame": 1059,
+   "endFrame": 1065
+  },
+  {
+   "text": "there,",
+   "start": 35.5,
+   "end": 35.7,
+   "startFrame": 1065,
+   "endFrame": 1071
+  },
+  {
+   "text": "on",
+   "start": 35.7,
+   "end": 35.8,
+   "startFrame": 1071,
+   "endFrame": 1074
+  },
+  {
+   "text": "the",
+   "start": 35.8,
+   "end": 35.9,
+   "startFrame": 1074,
+   "endFrame": 1077
+  },
+  {
+   "text": "first",
+   "start": 35.9,
+   "end": 36.1,
+   "startFrame": 1077,
+   "endFrame": 1083
+  },
+  {
+   "text": "card.",
+   "start": 36.1,
+   "end": 36.5,
+   "startFrame": 1083,
+   "endFrame": 1095
+  },
+  {
+   "text": "Every",
+   "start": 38.0,
+   "end": 38.2,
+   "startFrame": 1140,
+   "endFrame": 1146
+  },
+  {
+   "text": "lesson",
+   "start": 38.2,
+   "end": 38.6,
+   "startFrame": 1146,
+   "endFrame": 1158
+  },
+  {
+   "text": "keeps",
+   "start": 38.6,
+   "end": 38.9,
+   "startFrame": 1158,
+   "endFrame": 1167
+  },
+  {
+   "text": "its",
+   "start": 38.9,
+   "end": 39.1,
+   "startFrame": 1167,
+   "endFrame": 1173
+  },
+  {
+   "text": "notes.",
+   "start": 39.1,
+   "end": 39.6,
+   "startFrame": 1173,
+   "endFrame": 1188
+  },
+  {
+   "text": "What",
+   "start": 39.8,
+   "end": 40.0,
+   "startFrame": 1194,
+   "endFrame": 1200
+  },
+  {
+   "text": "you",
+   "start": 40.0,
+   "end": 40.1,
+   "startFrame": 1200,
+   "endFrame": 1203
+  },
+  {
+   "text": "covered.",
+   "start": 40.1,
+   "end": 40.6,
+   "startFrame": 1203,
+   "endFrame": 1218
+  },
+  {
+   "text": "Where",
+   "start": 40.7,
+   "end": 40.8,
+   "startFrame": 1221,
+   "endFrame": 1224
+  },
+  {
+   "text": "you",
+   "start": 40.8,
+   "end": 41.0,
+   "startFrame": 1224,
+   "endFrame": 1230
+  },
+  {
+   "text": "stopped.",
+   "start": 41.0,
+   "end": 41.7,
+   "startFrame": 1230,
+   "endFrame": 1251
+  },
+  {
+   "text": "What",
+   "start": 41.8,
+   "end": 42.0,
+   "startFrame": 1254,
+   "endFrame": 1260
+  },
+  {
+   "text": "you",
+   "start": 42.0,
+   "end": 42.1,
+   "startFrame": 1260,
+   "endFrame": 1263
+  },
+  {
+   "text": "left",
+   "start": 42.1,
+   "end": 42.3,
+   "startFrame": 1263,
+   "endFrame": 1269
+  },
+  {
+   "text": "for",
+   "start": 42.3,
+   "end": 42.5,
+   "startFrame": 1269,
+   "endFrame": 1275
+  },
+  {
+   "text": "later.",
+   "start": 42.5,
+   "end": 42.8,
+   "startFrame": 1275,
+   "endFrame": 1284
+  },
+  {
+   "text": "In",
+   "start": 44.1,
+   "end": 44.2,
+   "startFrame": 1323,
+   "endFrame": 1326
+  },
+  {
+   "text": "the",
+   "start": 44.2,
+   "end": 44.3,
+   "startFrame": 1326,
+   "endFrame": 1329
+  },
+  {
+   "text": "schedule,",
+   "start": 44.3,
+   "end": 44.7,
+   "startFrame": 1329,
+   "endFrame": 1341
+  },
+  {
+   "text": "finished",
+   "start": 44.9,
+   "end": 45.3,
+   "startFrame": 1347,
+   "endFrame": 1359
+  },
+  {
+   "text": "topics",
+   "start": 45.3,
+   "end": 45.7,
+   "startFrame": 1359,
+   "endFrame": 1371
+  },
+  {
+   "text": "are",
+   "start": 45.7,
+   "end": 45.9,
+   "startFrame": 1371,
+   "endFrame": 1377
+  },
+  {
+   "text": "crossed",
+   "start": 45.9,
+   "end": 46.4,
+   "startFrame": 1377,
+   "endFrame": 1392
+  },
+  {
+   "text": "out.",
+   "start": 46.4,
+   "end": 46.7,
+   "startFrame": 1392,
+   "endFrame": 1401
+  },
+  {
+   "text": "The",
+   "start": 46.8,
+   "end": 47.0,
+   "startFrame": 1404,
+   "endFrame": 1410
+  },
+  {
+   "text": "next",
+   "start": 47.0,
+   "end": 47.3,
+   "startFrame": 1410,
+   "endFrame": 1419
+  },
+  {
+   "text": "ones",
+   "start": 47.3,
+   "end": 47.5,
+   "startFrame": 1419,
+   "endFrame": 1425
+  },
+  {
+   "text": "get",
+   "start": 47.5,
+   "end": 47.7,
+   "startFrame": 1425,
+   "endFrame": 1431
+  },
+  {
+   "text": "their",
+   "start": 47.7,
+   "end": 47.8,
+   "startFrame": 1431,
+   "endFrame": 1434
+  },
+  {
+   "text": "dates.",
+   "start": 47.8,
+   "end": 48.2,
+   "startFrame": 1434,
+   "endFrame": 1446
+  },
+  {
+   "text": "And",
+   "start": 49.7,
+   "end": 49.9,
+   "startFrame": 1491,
+   "endFrame": 1497
+  },
+  {
+   "text": "the",
+   "start": 49.9,
+   "end": 50.0,
+   "startFrame": 1497,
+   "endFrame": 1500
+  },
+  {
+   "text": "bell",
+   "start": 50.0,
+   "end": 50.4,
+   "startFrame": 1500,
+   "endFrame": 1512
+  },
+  {
+   "text": "shows",
+   "start": 50.5,
+   "end": 50.8,
+   "startFrame": 1515,
+   "endFrame": 1524
+  },
+  {
+   "text": "every",
+   "start": 50.8,
+   "end": 51.2,
+   "startFrame": 1524,
+   "endFrame": 1536
+  },
+  {
+   "text": "lesson",
+   "start": 51.2,
+   "end": 51.6,
+   "startFrame": 1536,
+   "endFrame": 1548
+  },
+  {
+   "text": "coming",
+   "start": 51.6,
+   "end": 51.9,
+   "startFrame": 1548,
+   "endFrame": 1557
+  },
+  {
+   "text": "up.",
+   "start": 51.9,
+   "end": 52.2,
+   "startFrame": 1557,
+   "endFrame": 1566
+  },
+  {
+   "text": "Who,",
+   "start": 52.4,
+   "end": 52.8,
+   "startFrame": 1572,
+   "endFrame": 1584
+  },
+  {
+   "text": "when,",
+   "start": 53.1,
+   "end": 53.5,
+   "startFrame": 1593,
+   "endFrame": 1605
+  },
+  {
+   "text": "and",
+   "start": 53.6,
+   "end": 53.8,
+   "startFrame": 1608,
+   "endFrame": 1614
+  },
+  {
+   "text": "what's",
+   "start": 53.8,
+   "end": 54.0,
+   "startFrame": 1614,
+   "endFrame": 1620
+  },
+  {
+   "text": "next.",
+   "start": 54.0,
+   "end": 54.4,
+   "startFrame": 1620,
+   "endFrame": 1632
+  },
+  {
+   "text": "But",
+   "start": 56.1,
+   "end": 56.3,
+   "startFrame": 1683,
+   "endFrame": 1689
+  },
+  {
+   "text": "there's",
+   "start": 56.3,
+   "end": 56.6,
+   "startFrame": 1689,
+   "endFrame": 1698
+  },
+  {
+   "text": "one",
+   "start": 56.6,
+   "end": 56.8,
+   "startFrame": 1698,
+   "endFrame": 1704
+  },
+  {
+   "text": "more",
+   "start": 56.8,
+   "end": 57.1,
+   "startFrame": 1704,
+   "endFrame": 1713
+  },
+  {
+   "text": "thing.",
+   "start": 57.1,
+   "end": 57.4,
+   "startFrame": 1713,
+   "endFrame": 1722
+  },
+  {
+   "text": "Our",
+   "start": 57.8,
+   "end": 57.9,
+   "startFrame": 1734,
+   "endFrame": 1737
+  },
+  {
+   "text": "developer",
+   "start": 57.9,
+   "end": 58.3,
+   "startFrame": 1737,
+   "endFrame": 1749
+  },
+  {
+   "text": "will",
+   "start": 58.3,
+   "end": 58.4,
+   "startFrame": 1749,
+   "endFrame": 1752
+  },
+  {
+   "text": "show",
+   "start": 58.4,
+   "end": 58.6,
+   "startFrame": 1752,
+   "endFrame": 1758
+  },
+  {
+   "text": "you.",
+   "start": 58.6,
+   "end": 58.8,
+   "startFrame": 1758,
+   "endFrame": 1764
+  },
+  {
+   "text": "Over",
+   "start": 59.3,
+   "end": 59.5,
+   "startFrame": 1779,
+   "endFrame": 1785
+  },
+  {
+   "text": "to",
+   "start": 59.5,
+   "end": 59.6,
+   "startFrame": 1785,
+   "endFrame": 1788
+  },
+  {
+   "text": "you!",
+   "start": 59.6,
+   "end": 59.8,
+   "startFrame": 1788,
+   "endFrame": 1794
+  },
+  {
+   "text": "Thanks!",
+   "start": 61.6,
+   "end": 61.9,
+   "startFrame": 1848,
+   "endFrame": 1857
+  },
+  {
+   "text": "So,",
+   "start": 62.4,
+   "end": 62.7,
+   "startFrame": 1872,
+   "endFrame": 1881
+  },
+  {
+   "text": "what's",
+   "start": 62.8,
+   "end": 63.1,
+   "startFrame": 1884,
+   "endFrame": 1893
+  },
+  {
+   "text": "under",
+   "start": 63.1,
+   "end": 63.3,
+   "startFrame": 1893,
+   "endFrame": 1899
+  },
+  {
+   "text": "the",
+   "start": 63.3,
+   "end": 63.5,
+   "startFrame": 1899,
+   "endFrame": 1905
+  },
+  {
+   "text": "hood?",
+   "start": 63.5,
+   "end": 63.8,
+   "startFrame": 1905,
+   "endFrame": 1914
+  },
+  {
+   "text": "GPT-6",
+   "start": 64.4,
+   "end": 65.3,
+   "startFrame": 1932,
+   "endFrame": 1959
+  },
+  {
+   "text": "Luna",
+   "start": 65.3,
+   "end": 65.7,
+   "startFrame": 1959,
+   "endFrame": 1971
+  },
+  {
+   "text": "for",
+   "start": 65.7,
+   "end": 65.8,
+   "startFrame": 1971,
+   "endFrame": 1974
+  },
+  {
+   "text": "the",
+   "start": 65.8,
+   "end": 65.9,
+   "startFrame": 1974,
+   "endFrame": 1977
+  },
+  {
+   "text": "thinking,",
+   "start": 65.9,
+   "end": 66.4,
+   "startFrame": 1977,
+   "endFrame": 1992
+  },
+  {
+   "text": "and",
+   "start": 66.6,
+   "end": 66.8,
+   "startFrame": 1998,
+   "endFrame": 2004
+  },
+  {
+   "text": "Whisper",
+   "start": 66.8,
+   "end": 67.2,
+   "startFrame": 2004,
+   "endFrame": 2016
+  },
+  {
+   "text": "for",
+   "start": 67.2,
+   "end": 67.3,
+   "startFrame": 2016,
+   "endFrame": 2019
+  },
+  {
+   "text": "listening.",
+   "start": 67.3,
+   "end": 67.7,
+   "startFrame": 2019,
+   "endFrame": 2031
+  },
+  {
+   "text": "A",
+   "start": 68.3,
+   "end": 68.4,
+   "startFrame": 2049,
+   "endFrame": 2052
+  },
+  {
+   "text": "30-minute",
+   "start": 68.4,
+   "end": 68.9,
+   "startFrame": 2052,
+   "endFrame": 2067
+  },
+  {
+   "text": "lesson",
+   "start": 68.9,
+   "end": 69.4,
+   "startFrame": 2067,
+   "endFrame": 2082
+  },
+  {
+   "text": "costs",
+   "start": 69.4,
+   "end": 69.7,
+   "startFrame": 2082,
+   "endFrame": 2091
+  },
+  {
+   "text": "about",
+   "start": 69.7,
+   "end": 70.1,
+   "startFrame": 2091,
+   "endFrame": 2103
+  },
+  {
+   "text": "one",
+   "start": 70.1,
+   "end": 70.3,
+   "startFrame": 2103,
+   "endFrame": 2109
+  },
+  {
+   "text": "and",
+   "start": 70.3,
+   "end": 70.4,
+   "startFrame": 2109,
+   "endFrame": 2112
+  },
+  {
+   "text": "a",
+   "start": 70.4,
+   "end": 70.44,
+   "startFrame": 2112,
+   "endFrame": 2113
+  },
+  {
+   "text": "half",
+   "start": 70.44,
+   "end": 70.6,
+   "startFrame": 2113,
+   "endFrame": 2118
+  },
+  {
+   "text": "cents.",
+   "start": 70.6,
+   "end": 71.0,
+   "startFrame": 2118,
+   "endFrame": 2130
+  },
+  {
+   "text": "Cheaper",
+   "start": 71.3,
+   "end": 71.6,
+   "startFrame": 2139,
+   "endFrame": 2148
+  },
+  {
+   "text": "than",
+   "start": 71.6,
+   "end": 71.7,
+   "startFrame": 2148,
+   "endFrame": 2151
+  },
+  {
+   "text": "a",
+   "start": 71.7,
+   "end": 71.8,
+   "startFrame": 2151,
+   "endFrame": 2154
+  },
+  {
+   "text": "coffee.",
+   "start": 71.8,
+   "end": 72.2,
+   "startFrame": 2154,
+   "endFrame": 2166
+  },
+  {
+   "text": "Much",
+   "start": 72.5,
+   "end": 72.9,
+   "startFrame": 2175,
+   "endFrame": 2187
+  },
+  {
+   "text": "cheaper.",
+   "start": 72.9,
+   "end": 73.2,
+   "startFrame": 2187,
+   "endFrame": 2196
+  },
+  {
+   "text": "And",
+   "start": 74.6,
+   "end": 74.9,
+   "startFrame": 2238,
+   "endFrame": 2247
+  },
+  {
+   "text": "it's",
+   "start": 75.1,
+   "end": 75.2,
+   "startFrame": 2253,
+   "endFrame": 2256
+  },
+  {
+   "text": "open",
+   "start": 75.2,
+   "end": 75.4,
+   "startFrame": 2256,
+   "endFrame": 2262
+  },
+  {
+   "text": "source.",
+   "start": 75.4,
+   "end": 75.9,
+   "startFrame": 2262,
+   "endFrame": 2277
+  },
+  {
+   "text": "Want",
+   "start": 76.2,
+   "end": 76.3,
+   "startFrame": 2286,
+   "endFrame": 2289
+  },
+  {
+   "text": "to",
+   "start": 76.3,
+   "end": 76.4,
+   "startFrame": 2289,
+   "endFrame": 2292
+  },
+  {
+   "text": "try",
+   "start": 76.4,
+   "end": 76.6,
+   "startFrame": 2292,
+   "endFrame": 2298
+  },
+  {
+   "text": "it?",
+   "start": 76.6,
+   "end": 76.7,
+   "startFrame": 2298,
+   "endFrame": 2301
+  },
+  {
+   "text": "Open",
+   "start": 77.3,
+   "end": 77.5,
+   "startFrame": 2319,
+   "endFrame": 2325
+  },
+  {
+   "text": "the",
+   "start": 77.5,
+   "end": 77.6,
+   "startFrame": 2325,
+   "endFrame": 2328
+  },
+  {
+   "text": "website,",
+   "start": 77.6,
+   "end": 78.2,
+   "startFrame": 2328,
+   "endFrame": 2346
+  },
+  {
+   "text": "and",
+   "start": 78.2,
+   "end": 78.4,
+   "startFrame": 2346,
+   "endFrame": 2352
+  },
+  {
+   "text": "add",
+   "start": 78.4,
+   "end": 78.6,
+   "startFrame": 2352,
+   "endFrame": 2358
+  },
+  {
+   "text": "it",
+   "start": 78.6,
+   "end": 78.7,
+   "startFrame": 2358,
+   "endFrame": 2361
+  },
+  {
+   "text": "to",
+   "start": 78.7,
+   "end": 78.8,
+   "startFrame": 2361,
+   "endFrame": 2364
+  },
+  {
+   "text": "your",
+   "start": 78.8,
+   "end": 78.9,
+   "startFrame": 2364,
+   "endFrame": 2367
+  },
+  {
+   "text": "home",
+   "start": 78.9,
+   "end": 79.2,
+   "startFrame": 2367,
+   "endFrame": 2376
+  },
+  {
+   "text": "screen.",
+   "start": 79.2,
+   "end": 79.5,
+   "startFrame": 2376,
+   "endFrame": 2385
+  },
+  {
+   "text": "Paste",
+   "start": 80.0,
+   "end": 80.2,
+   "startFrame": 2400,
+   "endFrame": 2406
+  },
+  {
+   "text": "your",
+   "start": 80.2,
+   "end": 80.4,
+   "startFrame": 2406,
+   "endFrame": 2412
+  },
+  {
+   "text": "own",
+   "start": 80.4,
+   "end": 80.5,
+   "startFrame": 2412,
+   "endFrame": 2415
+  },
+  {
+   "text": "API",
+   "start": 80.5,
+   "end": 80.9,
+   "startFrame": 2415,
+   "endFrame": 2427
+  },
+  {
+   "text": "key,",
+   "start": 80.9,
+   "end": 81.3,
+   "startFrame": 2427,
+   "endFrame": 2439
+  },
+  {
+   "text": "and",
+   "start": 81.4,
+   "end": 81.6,
+   "startFrame": 2442,
+   "endFrame": 2448
+  },
+  {
+   "text": "you're",
+   "start": 81.6,
+   "end": 81.7,
+   "startFrame": 2448,
+   "endFrame": 2451
+  },
+  {
+   "text": "ready.",
+   "start": 81.7,
+   "end": 81.9,
+   "startFrame": 2451,
+   "endFrame": 2457
+  },
+  {
+   "text": "No",
+   "start": 82.5,
+   "end": 82.6,
+   "startFrame": 2475,
+   "endFrame": 2478
+  },
+  {
+   "text": "account.",
+   "start": 82.6,
+   "end": 83.2,
+   "startFrame": 2478,
+   "endFrame": 2496
+  },
+  {
+   "text": "No",
+   "start": 83.3,
+   "end": 83.5,
+   "startFrame": 2499,
+   "endFrame": 2505
+  },
+  {
+   "text": "server.",
+   "start": 83.5,
+   "end": 83.9,
+   "startFrame": 2505,
+   "endFrame": 2517
+  },
+  {
+   "text": "You",
+   "start": 85.2,
+   "end": 85.4,
+   "startFrame": 2556,
+   "endFrame": 2562
+  },
+  {
+   "text": "teach.",
+   "start": 85.4,
+   "end": 85.9,
+   "startFrame": 2562,
+   "endFrame": 2577
+  },
+  {
+   "text": "We",
+   "start": 86.1,
+   "end": 86.3,
+   "startFrame": 2583,
+   "endFrame": 2589
+  },
+  {
+   "text": "keep",
+   "start": 86.3,
+   "end": 86.6,
+   "startFrame": 2589,
+   "endFrame": 2598
+  },
+  {
+   "text": "the",
+   "start": 86.6,
+   "end": 86.7,
+   "startFrame": 2598,
+   "endFrame": 2601
+  },
+  {
+   "text": "thread.",
+   "start": 86.7,
+   "end": 87.0,
+   "startFrame": 2601,
+   "endFrame": 2610
+  },
+  {
+   "text": "Teach",
+   "start": 87.7,
+   "end": 87.9,
+   "startFrame": 2631,
+   "endFrame": 2637
+  },
+  {
+   "text": "and",
+   "start": 87.9,
+   "end": 88.0,
+   "startFrame": 2637,
+   "endFrame": 2640
+  },
+  {
+   "text": "Go.",
+   "start": 88.0,
+   "end": 88.2,
+   "startFrame": 2640,
+   "endFrame": 2646
+  }
+ ],
+ "raw": [
+  {
+   "text": "So,",
+   "start": 0.3,
+   "end": 0.5
+  },
+  {
+   "text": "where",
+   "start": 1.0,
+   "end": 1.2
+  },
+  {
+   "text": "did",
+   "start": 1.2,
+   "end": 1.4
+  },
+  {
+   "text": "we",
+   "start": 1.4,
+   "end": 1.6
+  },
+  {
+   "text": "stop",
+   "start": 1.6,
+   "end": 2.0
+  },
+  {
+   "text": "last",
+   "start": 2.0,
+   "end": 2.3
+  },
+  {
+   "text": "time?",
+   "start": 2.3,
+   "end": 2.6
+  },
+  {
+   "text": "Every",
+   "start": 3.1,
+   "end": 3.4
+  },
+  {
+   "text": "teacher",
+   "start": 3.4,
+   "end": 3.8
+  },
+  {
+   "text": "is",
+   "start": 3.8,
+   "end": 4.0
+  },
+  {
+   "text": "asked",
+   "start": 4.0,
+   "end": 4.2
+  },
+  {
+   "text": "this",
+   "start": 4.2,
+   "end": 4.5
+  },
+  {
+   "text": "every",
+   "start": 4.6,
+   "end": 5.2
+  },
+  {
+   "text": "single",
+   "start": 5.2,
+   "end": 5.5
+  },
+  {
+   "text": "week.",
+   "start": 5.5,
+   "end": 5.7
+  },
+  {
+   "text": "Teach",
+   "start": 7.2,
+   "end": 7.4
+  },
+  {
+   "text": "and",
+   "start": 7.4,
+   "end": 7.6
+  },
+  {
+   "text": "go",
+   "start": 7.6,
+   "end": 7.8
+  },
+  {
+   "text": "is",
+   "start": 7.8,
+   "end": 8.0
+  },
+  {
+   "text": "for",
+   "start": 8.0,
+   "end": 8.3
+  },
+  {
+   "text": "anyone",
+   "start": 8.3,
+   "end": 8.7
+  },
+  {
+   "text": "who",
+   "start": 8.7,
+   "end": 8.8
+  },
+  {
+   "text": "teaches.",
+   "start": 8.8,
+   "end": 9.4
+  },
+  {
+   "text": "Tutors,",
+   "start": 9.6,
+   "end": 10.3
+  },
+  {
+   "text": "teachers,",
+   "start": 10.4,
+   "end": 10.8
+  },
+  {
+   "text": "coaches,",
+   "start": 10.8,
+   "end": 11.4
+  },
+  {
+   "text": "make",
+   "start": 11.8,
+   "end": 12.0
+  },
+  {
+   "text": "a",
+   "start": 12.0,
+   "end": 12.1
+  },
+  {
+   "text": "space",
+   "start": 12.1,
+   "end": 12.6
+  },
+  {
+   "text": "for",
+   "start": 12.6,
+   "end": 12.8
+  },
+  {
+   "text": "each",
+   "start": 12.8,
+   "end": 13.1
+  },
+  {
+   "text": "student",
+   "start": 13.1,
+   "end": 13.5
+  },
+  {
+   "text": "or",
+   "start": 13.5,
+   "end": 13.6
+  },
+  {
+   "text": "class.",
+   "start": 13.6,
+   "end": 14.2
+  },
+  {
+   "text": "Send",
+   "start": 14.4,
+   "end": 14.7
+  },
+  {
+   "text": "your",
+   "start": 14.7,
+   "end": 14.8
+  },
+  {
+   "text": "curriculum.",
+   "start": 14.8,
+   "end": 15.5
+  },
+  {
+   "text": "It",
+   "start": 15.7,
+   "end": 15.8
+  },
+  {
+   "text": "becomes",
+   "start": 15.8,
+   "end": 16.1
+  },
+  {
+   "text": "a",
+   "start": 16.1,
+   "end": 16.1
+  },
+  {
+   "text": "clear",
+   "start": 16.1,
+   "end": 16.6
+  },
+  {
+   "text": "plan",
+   "start": 16.6,
+   "end": 17.2
+  },
+  {
+   "text": "topic",
+   "start": 17.2,
+   "end": 17.8
+  },
+  {
+   "text": "by",
+   "start": 17.8,
+   "end": 18.0
+  },
+  {
+   "text": "topic.",
+   "start": 18.0,
+   "end": 18.4
+  },
+  {
+   "text": "When",
+   "start": 19.4,
+   "end": 19.6
+  },
+  {
+   "text": "the",
+   "start": 19.6,
+   "end": 19.6
+  },
+  {
+   "text": "lesson",
+   "start": 19.6,
+   "end": 19.9
+  },
+  {
+   "text": "starts,",
+   "start": 19.9,
+   "end": 20.4
+  },
+  {
+   "text": "tap",
+   "start": 20.5,
+   "end": 20.8
+  },
+  {
+   "text": "record,",
+   "start": 20.8,
+   "end": 21.3
+  },
+  {
+   "text": "then",
+   "start": 21.7,
+   "end": 21.9
+  },
+  {
+   "text": "just",
+   "start": 21.9,
+   "end": 22.1
+  },
+  {
+   "text": "teach.",
+   "start": 22.1,
+   "end": 22.5
+  },
+  {
+   "text": "You",
+   "start": 22.7,
+   "end": 22.8
+  },
+  {
+   "text": "can",
+   "start": 22.8,
+   "end": 23.0
+  },
+  {
+   "text": "pause",
+   "start": 23.0,
+   "end": 23.6
+  },
+  {
+   "text": "or",
+   "start": 23.6,
+   "end": 23.7
+  },
+  {
+   "text": "even",
+   "start": 23.8,
+   "end": 24.0
+  },
+  {
+   "text": "leave",
+   "start": 24.0,
+   "end": 24.3
+  },
+  {
+   "text": "the",
+   "start": 24.3,
+   "end": 24.4
+  },
+  {
+   "text": "screen.",
+   "start": 24.4,
+   "end": 24.8
+  },
+  {
+   "text": "When",
+   "start": 25.5,
+   "end": 25.6
+  },
+  {
+   "text": "you",
+   "start": 25.6,
+   "end": 25.7
+  },
+  {
+   "text": "stop,",
+   "start": 25.7,
+   "end": 26.2
+  },
+  {
+   "text": "it",
+   "start": 26.3,
+   "end": 26.5
+  },
+  {
+   "text": "listens",
+   "start": 26.5,
+   "end": 26.8
+  },
+  {
+   "text": "to",
+   "start": 26.8,
+   "end": 26.9
+  },
+  {
+   "text": "the",
+   "start": 26.9,
+   "end": 27.0
+  },
+  {
+   "text": "whole",
+   "start": 27.0,
+   "end": 27.4
+  },
+  {
+   "text": "lesson.",
+   "start": 27.4,
+   "end": 27.8
+  },
+  {
+   "text": "Next",
+   "start": 29.2,
+   "end": 29.6
+  },
+  {
+   "text": "time,",
+   "start": 29.6,
+   "end": 29.9
+  },
+  {
+   "text": "the",
+   "start": 30.1,
+   "end": 30.2
+  },
+  {
+   "text": "app",
+   "start": 30.2,
+   "end": 30.4
+  },
+  {
+   "text": "tells",
+   "start": 30.4,
+   "end": 30.6
+  },
+  {
+   "text": "you",
+   "start": 30.6,
+   "end": 30.7
+  },
+  {
+   "text": "where",
+   "start": 30.7,
+   "end": 30.9
+  },
+  {
+   "text": "to",
+   "start": 30.9,
+   "end": 31.0
+  },
+  {
+   "text": "start.",
+   "start": 31.0,
+   "end": 31.4
+  },
+  {
+   "text": "And",
+   "start": 32.0,
+   "end": 32.2
+  },
+  {
+   "text": "that",
+   "start": 32.2,
+   "end": 32.4
+  },
+  {
+   "text": "topic",
+   "start": 32.4,
+   "end": 32.8
+  },
+  {
+   "text": "you",
+   "start": 32.8,
+   "end": 32.9
+  },
+  {
+   "text": "said",
+   "start": 32.9,
+   "end": 33.1
+  },
+  {
+   "text": "you'd",
+   "start": 33.1,
+   "end": 33.2
+  },
+  {
+   "text": "explain",
+   "start": 33.2,
+   "end": 33.6
+  },
+  {
+   "text": "later,",
+   "start": 33.6,
+   "end": 34.0
+  },
+  {
+   "text": "it",
+   "start": 34.3,
+   "end": 34.4
+  },
+  {
+   "text": "becomes",
+   "start": 34.4,
+   "end": 34.7
+  },
+  {
+   "text": "a",
+   "start": 34.7,
+   "end": 34.7
+  },
+  {
+   "text": "reminder",
+   "start": 34.7,
+   "end": 35.2
+  },
+  {
+   "text": "right",
+   "start": 35.3,
+   "end": 35.5
+  },
+  {
+   "text": "there",
+   "start": 35.5,
+   "end": 35.7
+  },
+  {
+   "text": "on",
+   "start": 35.7,
+   "end": 35.8
+  },
+  {
+   "text": "the",
+   "start": 35.8,
+   "end": 35.9
+  },
+  {
+   "text": "first",
+   "start": 35.9,
+   "end": 36.1
+  },
+  {
+   "text": "card.",
+   "start": 36.1,
+   "end": 36.5
+  },
+  {
+   "text": "Every",
+   "start": 38.0,
+   "end": 38.2
+  },
+  {
+   "text": "lesson",
+   "start": 38.2,
+   "end": 38.6
+  },
+  {
+   "text": "keeps",
+   "start": 38.6,
+   "end": 38.9
+  },
+  {
+   "text": "its",
+   "start": 38.9,
+   "end": 39.1
+  },
+  {
+   "text": "notes,",
+   "start": 39.1,
+   "end": 39.6
+  },
+  {
+   "text": "what",
+   "start": 39.8,
+   "end": 40.0
+  },
+  {
+   "text": "you",
+   "start": 40.0,
+   "end": 40.1
+  },
+  {
+   "text": "covered,",
+   "start": 40.1,
+   "end": 40.6
+  },
+  {
+   "text": "where",
+   "start": 40.7,
+   "end": 40.8
+  },
+  {
+   "text": "you",
+   "start": 40.8,
+   "end": 41.0
+  },
+  {
+   "text": "stopped,",
+   "start": 41.0,
+   "end": 41.7
+  },
+  {
+   "text": "what",
+   "start": 41.8,
+   "end": 42.0
+  },
+  {
+   "text": "you",
+   "start": 42.0,
+   "end": 42.1
+  },
+  {
+   "text": "left",
+   "start": 42.1,
+   "end": 42.3
+  },
+  {
+   "text": "for",
+   "start": 42.3,
+   "end": 42.5
+  },
+  {
+   "text": "later.",
+   "start": 42.5,
+   "end": 42.8
+  },
+  {
+   "text": "In",
+   "start": 44.1,
+   "end": 44.2
+  },
+  {
+   "text": "the",
+   "start": 44.2,
+   "end": 44.3
+  },
+  {
+   "text": "schedule,",
+   "start": 44.3,
+   "end": 44.7
+  },
+  {
+   "text": "finished",
+   "start": 44.9,
+   "end": 45.3
+  },
+  {
+   "text": "topics",
+   "start": 45.3,
+   "end": 45.7
+  },
+  {
+   "text": "are",
+   "start": 45.7,
+   "end": 45.9
+  },
+  {
+   "text": "crossed",
+   "start": 45.9,
+   "end": 46.4
+  },
+  {
+   "text": "out.",
+   "start": 46.4,
+   "end": 46.7
+  },
+  {
+   "text": "The",
+   "start": 46.8,
+   "end": 47.0
+  },
+  {
+   "text": "next",
+   "start": 47.0,
+   "end": 47.3
+  },
+  {
+   "text": "ones",
+   "start": 47.3,
+   "end": 47.5
+  },
+  {
+   "text": "get",
+   "start": 47.5,
+   "end": 47.7
+  },
+  {
+   "text": "their",
+   "start": 47.7,
+   "end": 47.8
+  },
+  {
+   "text": "dates.",
+   "start": 47.8,
+   "end": 48.2
+  },
+  {
+   "text": "And",
+   "start": 49.7,
+   "end": 49.9
+  },
+  {
+   "text": "the",
+   "start": 49.9,
+   "end": 50.0
+  },
+  {
+   "text": "bell",
+   "start": 50.0,
+   "end": 50.4
+  },
+  {
+   "text": "shows",
+   "start": 50.5,
+   "end": 50.8
+  },
+  {
+   "text": "every",
+   "start": 50.8,
+   "end": 51.2
+  },
+  {
+   "text": "lesson",
+   "start": 51.2,
+   "end": 51.6
+  },
+  {
+   "text": "coming",
+   "start": 51.6,
+   "end": 51.9
+  },
+  {
+   "text": "up,",
+   "start": 51.9,
+   "end": 52.2
+  },
+  {
+   "text": "who,",
+   "start": 52.4,
+   "end": 52.8
+  },
+  {
+   "text": "when,",
+   "start": 53.1,
+   "end": 53.5
+  },
+  {
+   "text": "and",
+   "start": 53.6,
+   "end": 53.8
+  },
+  {
+   "text": "what's",
+   "start": 53.8,
+   "end": 54.0
+  },
+  {
+   "text": "next.",
+   "start": 54.0,
+   "end": 54.4
+  },
+  {
+   "text": "But",
+   "start": 56.1,
+   "end": 56.3
+  },
+  {
+   "text": "there's",
+   "start": 56.3,
+   "end": 56.6
+  },
+  {
+   "text": "one",
+   "start": 56.6,
+   "end": 56.8
+  },
+  {
+   "text": "more",
+   "start": 56.8,
+   "end": 57.1
+  },
+  {
+   "text": "thing",
+   "start": 57.1,
+   "end": 57.4
+  },
+  {
+   "text": "our",
+   "start": 57.8,
+   "end": 57.9
+  },
+  {
+   "text": "developer",
+   "start": 57.9,
+   "end": 58.3
+  },
+  {
+   "text": "will",
+   "start": 58.3,
+   "end": 58.4
+  },
+  {
+   "text": "show",
+   "start": 58.4,
+   "end": 58.6
+  },
+  {
+   "text": "you.",
+   "start": 58.6,
+   "end": 58.8
+  },
+  {
+   "text": "Over",
+   "start": 59.3,
+   "end": 59.5
+  },
+  {
+   "text": "to",
+   "start": 59.5,
+   "end": 59.6
+  },
+  {
+   "text": "you.",
+   "start": 59.6,
+   "end": 59.8
+  },
+  {
+   "text": "Thanks.",
+   "start": 61.6,
+   "end": 61.9
+  },
+  {
+   "text": "So,",
+   "start": 62.4,
+   "end": 62.7
+  },
+  {
+   "text": "what's",
+   "start": 62.8,
+   "end": 63.1
+  },
+  {
+   "text": "under",
+   "start": 63.1,
+   "end": 63.3
+  },
+  {
+   "text": "the",
+   "start": 63.3,
+   "end": 63.5
+  },
+  {
+   "text": "hood?",
+   "start": 63.5,
+   "end": 63.8
+  },
+  {
+   "text": "GPT-6",
+   "start": 64.4,
+   "end": 65.3
+  },
+  {
+   "text": "Luna",
+   "start": 65.3,
+   "end": 65.7
+  },
+  {
+   "text": "for",
+   "start": 65.7,
+   "end": 65.8
+  },
+  {
+   "text": "the",
+   "start": 65.8,
+   "end": 65.9
+  },
+  {
+   "text": "thinking",
+   "start": 65.9,
+   "end": 66.4
+  },
+  {
+   "text": "and",
+   "start": 66.6,
+   "end": 66.8
+  },
+  {
+   "text": "Whisper",
+   "start": 66.8,
+   "end": 67.2
+  },
+  {
+   "text": "for",
+   "start": 67.2,
+   "end": 67.3
+  },
+  {
+   "text": "listening.",
+   "start": 67.3,
+   "end": 67.7
+  },
+  {
+   "text": "A",
+   "start": 68.3,
+   "end": 68.4
+  },
+  {
+   "text": "30-minute",
+   "start": 68.4,
+   "end": 68.9
+  },
+  {
+   "text": "lesson",
+   "start": 68.9,
+   "end": 69.4
+  },
+  {
+   "text": "costs",
+   "start": 69.4,
+   "end": 69.7
+  },
+  {
+   "text": "about",
+   "start": 69.7,
+   "end": 70.1
+  },
+  {
+   "text": "1",
+   "start": 70.1,
+   "end": 70.3
+  },
+  {
+   "text": "and",
+   "start": 70.3,
+   "end": 70.4
+  },
+  {
+   "text": "1/2",
+   "start": 70.4,
+   "end": 70.6
+  },
+  {
+   "text": "cents,",
+   "start": 70.6,
+   "end": 71.0
+  },
+  {
+   "text": "cheaper",
+   "start": 71.3,
+   "end": 71.6
+  },
+  {
+   "text": "than",
+   "start": 71.6,
+   "end": 71.7
+  },
+  {
+   "text": "a",
+   "start": 71.7,
+   "end": 71.8
+  },
+  {
+   "text": "coffee,",
+   "start": 71.8,
+   "end": 72.2
+  },
+  {
+   "text": "much",
+   "start": 72.5,
+   "end": 72.9
+  },
+  {
+   "text": "cheaper.",
+   "start": 72.9,
+   "end": 73.2
+  },
+  {
+   "text": "And",
+   "start": 74.6,
+   "end": 74.9
+  },
+  {
+   "text": "it's",
+   "start": 75.1,
+   "end": 75.2
+  },
+  {
+   "text": "open",
+   "start": 75.2,
+   "end": 75.4
+  },
+  {
+   "text": "source.",
+   "start": 75.4,
+   "end": 75.9
+  },
+  {
+   "text": "Want",
+   "start": 76.2,
+   "end": 76.3
+  },
+  {
+   "text": "to",
+   "start": 76.3,
+   "end": 76.4
+  },
+  {
+   "text": "try",
+   "start": 76.4,
+   "end": 76.6
+  },
+  {
+   "text": "it?",
+   "start": 76.6,
+   "end": 76.7
+  },
+  {
+   "text": "Open",
+   "start": 77.3,
+   "end": 77.5
+  },
+  {
+   "text": "the",
+   "start": 77.5,
+   "end": 77.6
+  },
+  {
+   "text": "website",
+   "start": 77.6,
+   "end": 78.2
+  },
+  {
+   "text": "and",
+   "start": 78.2,
+   "end": 78.4
+  },
+  {
+   "text": "add",
+   "start": 78.4,
+   "end": 78.6
+  },
+  {
+   "text": "it",
+   "start": 78.6,
+   "end": 78.7
+  },
+  {
+   "text": "to",
+   "start": 78.7,
+   "end": 78.8
+  },
+  {
+   "text": "your",
+   "start": 78.8,
+   "end": 78.9
+  },
+  {
+   "text": "home",
+   "start": 78.9,
+   "end": 79.2
+  },
+  {
+   "text": "screen.",
+   "start": 79.2,
+   "end": 79.5
+  },
+  {
+   "text": "Paste",
+   "start": 80.0,
+   "end": 80.2
+  },
+  {
+   "text": "your",
+   "start": 80.2,
+   "end": 80.4
+  },
+  {
+   "text": "own",
+   "start": 80.4,
+   "end": 80.5
+  },
+  {
+   "text": "API",
+   "start": 80.5,
+   "end": 80.9
+  },
+  {
+   "text": "key",
+   "start": 80.9,
+   "end": 81.3
+  },
+  {
+   "text": "and",
+   "start": 81.4,
+   "end": 81.6
+  },
+  {
+   "text": "you're",
+   "start": 81.6,
+   "end": 81.7
+  },
+  {
+   "text": "ready.",
+   "start": 81.7,
+   "end": 81.9
+  },
+  {
+   "text": "No",
+   "start": 82.5,
+   "end": 82.6
+  },
+  {
+   "text": "account,",
+   "start": 82.6,
+   "end": 83.2
+  },
+  {
+   "text": "no",
+   "start": 83.3,
+   "end": 83.5
+  },
+  {
+   "text": "server.",
+   "start": 83.5,
+   "end": 83.9
+  },
+  {
+   "text": "You",
+   "start": 85.2,
+   "end": 85.4
+  },
+  {
+   "text": "teach,",
+   "start": 85.4,
+   "end": 85.9
+  },
+  {
+   "text": "we",
+   "start": 86.1,
+   "end": 86.3
+  },
+  {
+   "text": "keep",
+   "start": 86.3,
+   "end": 86.6
+  },
+  {
+   "text": "the",
+   "start": 86.6,
+   "end": 86.7
+  },
+  {
+   "text": "thread.",
+   "start": 86.7,
+   "end": 87.0
+  },
+  {
+   "text": "Teach",
+   "start": 87.7,
+   "end": 87.9
+  },
+  {
+   "text": "and",
+   "start": 87.9,
+   "end": 88.0
+  },
+  {
+   "text": "go.",
+   "start": 88.0,
+   "end": 88.2
+  }
+ ]
+}
