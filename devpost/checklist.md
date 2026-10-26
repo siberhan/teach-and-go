@@ -82,7 +82,7 @@ Build mode: fast
 - [ ] Schedule view: a timeline of when each topic will be taught, from the routine (learner: "ders programını göremiyoruz")
 - [ ] The AI never guesses the routine; it asks, and every AI question offers tap-able options plus "write your own"
 - [ ] A new document on an existing plan is never applied silently; with no clear instruction the AI asks what to do and taught topics stay
-- [ ] Voice assistant on every screen, as a continuing conversation with a mic; confirmation before changes (open needs none)
+- [ ] Voice assistant on every screen, as a continuing conversation with a mic; a small agent that uses several app tools per message, changes apply right away, delete asks first
 - [ ] Bring your own OpenRouter key (GPT-6 Luna, reasoning off; Whisper large v3), optional free Groq key for speech with OpenRouter fallback
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
@@ -124,3 +124,5 @@ Activity mode:
 - Audio is split into ~5-minute parts with 3 s overlap (was: only over 24 MB) so each speech request stays far under the providers' time limits.
 - Measured cost of a 30-minute lesson: ≈ $0.015 (Whisper ≈ $0.014 + analysis ≈ $0.001).
 - New logo (learner's pick, a bookmark with a play sign: "where we stopped" + "go on"): `public/logo.png` drives the app icons and favicon via `scripts/make-icons.mjs`; a transparent `public/logo-mark.png` sits on the Start screen and in the sidebar.
+- The assistant became a small tool-using agent (learner: the single-action assistant could not fill an empty space's topics, created only one of two requested spaces, and mixed English template replies into Turkish chats). Built with the Vercel AI SDK — it runs in the browser with the teacher's key and has an official OpenRouter provider, so there is still no server. Changes apply directly and show as chips; deleting keeps a confirm tap (learner agreed). Replies follow the language of the latest message; the reminder rides on the message itself because the instructions alone lost to a long history in another language. `scripts/check-assistant.mjs` covers two spaces from one Turkish message, topics for an empty space, editing, rename and delete-after-tap.
+- `planTurn` fix found by that check: when the teacher answers a routine question, the document is sent again for context, and the model took it for a new document and asked what to do with it, losing the answer. The new-document question is now skipped while the teacher is answering.

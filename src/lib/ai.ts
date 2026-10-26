@@ -2,7 +2,7 @@ import { askJson, type Attachment } from './openrouter.ts'
 import type { Deferred, Lesson, Plan } from './db.ts'
 import { scheduleOf } from './schedule.ts'
 
-// The app's AI tasks: prompts and JSON schemas. Plain requests through OpenRouter, no agent framework.
+// The app's AI tasks: prompts and JSON schemas, one request each. The assistant is a small agent in agent.ts.
 export type { Attachment }
 
 export interface Question {
@@ -78,11 +78,11 @@ const draftSchema = {
   required: ['plan', 'madeByAi', 'changed'],
 }
 
-const today = () => new Date().toISOString().slice(0, 10)
-const WEEKDAYS_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+export const today = () => new Date().toISOString().slice(0, 10)
+export const WEEKDAYS_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 // Topic ids are assigned here, not by the model, so they are stable and unique.
-function withIds(plan: Plan, old?: Plan): Plan {
+export function withIds(plan: Plan, old?: Plan): Plan {
   return {
     ...plan,
     topics: plan.topics.map((t, i) => ({
@@ -123,7 +123,7 @@ Rules:
 - Topic dates: only if the source gives them. "lessons" on a topic: only if stated.
 - Never remove or rename topics that were already taught.
 - Ask at most ONE question, with 2 to 4 short answer options the teacher can tap. Ask only the first that applies:
-  1. Only if a current plan exists (not "(none yet)"): a new document came with that plan in place and no clear instruction what to do with it → do NOT change the plan (changed=false, return it as it is) and ask what to do with it. Options like: add its topics after the current ones / replace the topics not taught yet / only add detail to existing topics.
+  1. Only if a current plan exists (not "(none yet)") and the teacher is not answering your question: a new document came with that plan in place and no clear instruction what to do with it → do NOT change the plan (changed=false, return it as it is) and ask what to do with it. Options like: add its topics after the current ones / replace the topics not taught yet / only add detail to existing topics.
   2. The schedule is still unknown → ask about the routine (how often, which days, what time, from when). Options should be common routines that fit the material, phrased as answers.
   Otherwise ask nothing.
 - changed = true if the returned plan differs from the current plan.
@@ -132,7 +132,7 @@ Rules:
 Current plan: ${turn.plan ? JSON.stringify(planForAi(turn.plan)) : '(none yet)'}
 Already taught: ${turn.taught.length ? turn.taught.join('; ') : '(nothing yet)'}
 ${turn.asked ? `You asked: ${turn.asked.text}\nTeacher's answer: ${turn.message}` : `Teacher's message: ${turn.message || '(none)'}`}
-${turn.files.length ? 'New document(s) attached.' : 'No new document.'}`
+${turn.files.length ? (turn.asked ? 'The document(s) from your question are attached again; act on them as the answer says.' : 'New document(s) attached.') : 'No new document.'}`
   const draft = await askJson<PlanDraft>(key, prompt, draftSchema, turn.files)
   const plan = !draft.changed && turn.plan ? turn.plan : withIds(draft.plan, turn.plan)
   // The routine is never guessed: if it is still unknown and the model forgot to ask, ask here.
@@ -197,55 +197,4 @@ Open deferred items: ${JSON.stringify(openDeferred.map(({ id, text }) => ({ id, 
 Transcript:
 ${transcript}`
   return askJson<LessonMemory>(key, prompt, memorySchema)
-}
-
-export interface Command {
-  action: 'create_space' | 'open_space' | 'start_recording' | 'rename_space' | 'delete_space' | 'edit_plan' | 'answer'
-  space?: string // exact name of an existing space
-  name?: string // new space name, or the new name when renaming
-  copyFrom?: string // existing space whose topics a new space starts with
-  change?: string // for edit_plan: what to change, in the teacher's words
-  reply?: string // for answer: the reply to the teacher
-}
-
-const commandSchema = {
-  type: 'object',
-  properties: {
-    action: { type: 'string', enum: ['create_space', 'open_space', 'start_recording', 'rename_space', 'delete_space', 'edit_plan', 'answer'] },
-    space: { type: 'string' },
-    name: { type: 'string' },
-    copyFrom: { type: 'string' },
-    change: { type: 'string' },
-    reply: { type: 'string' },
-  },
-  required: ['action'],
-}
-
-export interface Turn {
-  who: 'teacher' | 'assistant'
-  text: string
-}
-
-// The assistant: each message → one app action or a short answer. The app asks the teacher before anything changes.
-// Context is small on purpose: the last few turns, what is on screen, and one line per space.
-export async function understandCommand(key: string, said: string, ctx: { history: Turn[]; screen: string; spaces: string[] }): Promise<Command> {
-  const prompt = `You are the assistant inside Teach&Go, an app that remembers where each lesson stopped. Each student or class is a "space".
-Pick ONE action for the teacher's latest message:
-- create_space: name = new space name; copyFrom = an existing space whose topics it should start with, if asked.
-- open_space: space.
-- start_recording: start recording a lesson in space.
-- rename_space: space, name = the new name.
-- delete_space: space.
-- edit_plan: space; change = what to change in its lesson plan or routine (topics, detail, order, lesson days and times), in the teacher's words.
-- answer: anything else. reply = a short, helpful answer (1–3 sentences) using what is on screen and the spaces below — e.g. where a space stopped, what comes next. If they ask for something the app cannot do (like editing a recorded lesson's notes), say so plainly and offer the closest thing you can do. If the request is unclear, ask one short question.
-space and copyFrom must be exact names from the spaces below. "this space"/"here" = the space on screen.
-Reply in the teacher's language.
-
-On screen: ${ctx.screen}
-Spaces:
-${ctx.spaces.join('\n') || '(none yet)'}
-Conversation so far:
-${ctx.history.map((t) => `${t.who}: ${t.text}`).join('\n') || '(new)'}
-Teacher: ${said}`
-  return askJson<Command>(key, prompt, commandSchema)
 }

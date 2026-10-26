@@ -88,8 +88,10 @@ PRD ref: `prd.md > Recording a Lesson`.
 Each function is one request with a strict JSON schema, reasoning off:
 - `planTurn(plan?, taught, files, message, asked?)` → plan + at most one question with options. Builds, changes or only asks. PRD ref: `prd.md > Space Setup (Space settings)`.
 - `analyzeLesson(plan, lastStop, openDeferred, transcript)` → `LessonMemory`. PRD ref: `prd.md > Lesson Analysis and Memory`.
-- `understandCommand(said, history, screen, spaces)` → one assistant action. PRD ref: `prd.md > Stretch Goals Added During the Build`.
 `openrouter.ts` turns each schema into strict form (every field required, empty values removed after the reply), because some models skip optional fields otherwise.
+
+### Assistant Agent (`src/lib/agent.ts`)
+`runAgent(key, history, said, env)` runs a tool loop with the Vercel AI SDK (`ai` + `@openrouter/ai-sdk-provider`, GPT-6 Luna, reasoning off, at most 8 steps). Tools: `read_space`, `create_space`, `open_space`, `rename_space`, `set_topics`, `set_routine`, `start_recording`, `delete_space`. Tools write to Dexie directly; `delete_space` only returns a pending delete that the panel confirms. Taught topics cannot be removed (`set_topics` rejects it). The model sees what is on screen and one line per space; the conversation history stays until the panel closes. PRD ref: `prd.md > Stretch Goals Added During the Build`.
 
 ### Analysis Runner (`src/lib/analysis.ts`)
 Runs steps 7–8 of the journey for one lesson and updates `lesson.status`. It keeps running while the teacher moves between screens. When the app starts, any lesson still `analyzing` with audio saved is resumed. On error: `status: failed` + message; audio is kept for **Retry**.
@@ -137,7 +139,8 @@ teach-and-go/
 │   └── lib/
 │       ├── db.ts             # Dexie notebook
 │       ├── settings.ts
-│       ├── ai.ts             # prompts + schemas: plan, lesson memory, assistant
+│       ├── ai.ts             # prompts + schemas: plan, lesson memory
+│       ├── agent.ts          # assistant: tool loop over the app's actions
 │       ├── openrouter.ts     # chat + transcription requests
 │       ├── groq.ts           # optional free speech-to-text
 │       ├── speech.ts         # Groq first, OpenRouter fallback

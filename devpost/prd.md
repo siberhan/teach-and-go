@@ -133,19 +133,18 @@ None of these were in the original POC — they were kept out so the kernel (the
 - **Questions as options, not chat** — every AI question comes with 2–4 tap-able answers (A, B, C…) and the teacher can still write their own. Fast on a phone, fewer tokens, no free-form chat.
 - **Safe new documents** — adding a new PDF to a space that already has a plan never overwrites it silently. The AI gets the current plan, what was already taught, and the new document; with no clear instruction it leaves the plan as it is and asks what to do (add after / replace what's not taught yet / add detail). Taught topics are never removed.
 - **Schedule view** — a timeline of when each topic will be taught, projected from the routine: done, next, and later lessons, with estimated dates marked as such.
-- **Voice assistant on every screen** — tap the sparkle, speak ("Create a space called Alex with Maya's topics", "Make the chain rule topic more detailed"). The conversation continues in a panel with a mic until the teacher closes it, and the assistant knows what is on screen. Each message is still **one** request that picks **one** action from a short fixed list; anything that changes data shows a confirmation card first (opening a space needs none). Deleting asks a normal confirmation.
+- **Voice assistant on every screen** — tap the sparkle, speak ("Create a space called Alex with Maya's topics", "Make the chain rule topic more detailed"). The conversation continues in a panel with a mic until the teacher closes it, and the assistant knows what is on screen. It is a small agent: for one message it can use several of the app's tools in a row (create two spaces, then write topics into one of them; read a plan, then change it). Changes apply right away and are listed as small chips under the reply; only deleting waits for a confirm tap. Every reply is written by the model in the language of the teacher's latest message.
 - **Bring your own key, one key** — free tiers were often overloaded during testing, so the app moved to the teacher's own OpenRouter key. The model was chosen by measurement, not by name: GPT-6 Luna passed the routine check that MiMo-V2.6-Flash failed, faster and cheaper (`scripts/compare-models.mjs`). A 30-minute lesson costs about $0.015. An optional free Groq key is used first for speech-to-text, with OpenRouter as the automatic fallback.
 
-Example: "Create a space called Alex with Maya's topics" → a confirmation card → new space Alex with a copy of Maya's plan (topics only; Maya's lesson memory stays with Maya).
+Example: "Create a space called Alex with Maya's topics" → new space Alex with a copy of Maya's plan (topics only; Maya's lesson memory stays with Maya).
 
 ## Possible Later Enhancements
-- A larger assistant: more actions, several steps in one request.
+- More assistant tools (for example editing a recorded lesson's notes).
 - Weekly overview of what was covered across lessons.
 - Let the teacher pick the model in Settings.
-- An agent library (for example the Vercel AI SDK) if the assistant ever needs multi-step plans; today each message is one small request, so it is not needed.
 
 ## Non-Goals
-- Not a free-form AI chatbot — it uses tokens and is not the kernel. (The stretch-goal assistant keeps a short conversation, but each message is one request that picks one app action, with a confirmation before changes.)
+- Not a free-form AI chatbot — it uses tokens and is not the kernel. (The stretch-goal assistant only acts on the teacher's spaces through a fixed set of app tools, at most 8 steps per message.)
 - Never stores raw audio — privacy promise.
 - No agent framework — simplicity and token cost.
 
