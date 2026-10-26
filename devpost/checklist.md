@@ -76,14 +76,14 @@ Build mode: fast
 
 ## Final Review
 
-- [ ] Recording keeps going when the teacher leaves the recording screen; a bottom bar shows it and leads back to it (learner feedback: going back deleted the recording)
-- [ ] Recording can be paused and resumed (and discarded); paused time is not recorded and the result is still one lesson
-- [ ] Start screen: upcoming lessons move into a notification menu instead of stacking at the top (learner feedback: many students would cover the screen)
-- [ ] Schedule view: a timeline of when each topic will be taught, from the routine (learner: "we can't see the lesson schedule")
+- [x] Recording keeps going when the teacher leaves the recording screen; a bottom bar shows it and leads back to it (learner feedback: going back deleted the recording)
+- [x] Recording can be paused and resumed (and discarded); paused time is not recorded and the result is still one lesson
+- [x] Start screen: upcoming lessons move into a notification menu instead of stacking at the top (learner feedback: many students would cover the screen)
+- [x] Schedule view: a timeline of when each topic will be taught, from the routine (learner: "we can't see the lesson schedule")
 - [ ] The AI never guesses the routine; it asks, and every AI question offers tap-able options plus "write your own"
 - [ ] A new document on an existing plan is never applied silently; with no clear instruction the AI asks what to do and taught topics stay
 - [x] Voice assistant on every screen, as a continuing conversation with a mic; a small agent that uses several app tools per message, changes apply right away, delete asks first
-- [ ] Bring your own OpenRouter key (GPT-6 Luna, reasoning off; Whisper large v3), optional free Groq key for speech with OpenRouter fallback
+- [x] Bring your own OpenRouter key (GPT-6 Luna, reasoning off; Whisper large v3), optional free Groq key for speech with OpenRouter fallback
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
