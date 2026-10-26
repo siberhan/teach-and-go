@@ -123,3 +123,4 @@ Activity mode:
 - Optional Groq key (learner's request): speech-to-text uses Groq's free `whisper-large-v3` when a Groq key is set, and falls back to OpenRouter's `openai/whisper-large-v3` on any Groq error (`scripts/check-speech.mjs`).
 - Audio is split into ~5-minute parts with 3 s overlap (was: only over 24 MB) so each speech request stays far under the providers' time limits.
 - Measured cost of a 30-minute lesson: ≈ $0.015 (Whisper ≈ $0.014 + analysis ≈ $0.001).
+- New logo (learner's pick, a bookmark with a play sign: "where we stopped" + "go on"): `public/logo.png` drives the app icons and favicon via `scripts/make-icons.mjs`; a transparent `public/logo-mark.png` sits on the Start screen and in the sidebar.

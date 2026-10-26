@@ -150,7 +150,8 @@ span.chip { cursor: default; }
     padding: var(--space-3) var(--space-2);
     background: var(--surface); border-right: var(--border);
   }
-  .sidebar-logo { font-size: 26px; font-weight: var(--weight-bold); text-decoration: none; padding: 0 8px var(--space-1); }
+  .sidebar-logo { font-size: 26px; font-weight: var(--weight-bold); text-decoration: none; padding: 0 8px var(--space-1); display: flex; align-items: center; gap: 8px; }
+  .sidebar-logo img { width: 36px; height: 36px; }
   .sidebar-list { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; }
   .sidebar-item { padding: 10px 12px; border-radius: var(--radius); text-decoration: none; border: 1.5px solid transparent; }
   .sidebar-item:hover { background: var(--bg); }
@@ -273,3 +274,6 @@ body:has(.rec-bar) .screen { padding-bottom: 96px; }
 .mic-round:disabled { opacity: 0.5; }
 .assistant-preview { background: var(--surface); border: var(--border); border-radius: var(--radius); padding: 12px 14px; max-height: 40vh; overflow-y: auto; }
 @media (min-width: 900px) { .assistant-backdrop { align-items: center; } }
+
+/* Transparent mark made from public/logo.png; the icons use the full logo. */
+.hero-logo { width: 112px; height: 112px; margin: 0 auto -8px; display: block; }

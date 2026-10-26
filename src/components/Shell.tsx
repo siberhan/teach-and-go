@@ -25,7 +25,7 @@ export default function Shell() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <Link to="/" className="sidebar-logo">Teach&amp;Go</Link>
+        <Link to="/" className="sidebar-logo"><img src="./logo-mark.png" alt="" />Teach&amp;Go</Link>
         <nav className="sidebar-list">
           {spaces?.map((s) => (
             <NavLink key={s.id} to={`/space/${s.id}`} className="sidebar-item">

@@ -10,6 +10,7 @@ export default function Start() {
         <Notifications />
       </div>
       <div className="hero">
+        <img className="hero-logo" src="./logo-mark.png" alt="" />
         <h1 className="logo">Teach&amp;Go</h1>
         <p className="muted">Teach and go. We keep the thread.</p>
       </div>

@@ -11,7 +11,7 @@ export default defineConfig({
     // "Install app" on phone and desktop: manifest + service worker that caches the app shell.
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'flac/*'],
+      includeAssets: ['favicon.png', 'logo.png', 'logo-mark.png', 'apple-touch-icon.png', 'flac/*'],
       workbox: { globPatterns: ['**/*.{js,css,html,svg,png,wasm}'], maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
       manifest: {
         name: 'Teach&Go',
