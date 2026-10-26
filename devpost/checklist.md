@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Enter your keys, create a space with a student's name, close the tab, open it again — the space and keys are still there.
   Commit: `Add settings, spaces and local notebook`
 
-- [ ] **3. You can send a curriculum and confirm the plan the AI makes from it**
+- [x] **3. You can send a curriculum and confirm the plan the AI makes from it**
   Becomes usable: In Space settings, the composer takes a PDF/image and/or text; Gemini returns a short plan summary plus questions with confirm/correct buttons; confirming saves the plan (topics, dates or lesson days) to the space. A correction sends the plan back to Gemini and shows the updated one. Documents over 100 pages / 20 MB are rejected before sending.
   Why now: First real AI call — proves the unverified Gemini 3.5 Flash Lite model ID and low-thinking setting early. The kernel's deferred-topic matching needs a plan with topic IDs, so the plan must exist before lesson analysis.
   PRD ref: `prd.md > Space Setup (Space settings)`, `prd.md > The Core Journey` (steps 4-5)
@@ -96,3 +96,6 @@ Activity mode:
 - Vite `base` is `./` instead of the repo name — relative paths work on GitHub Pages under any repo name with HashRouter.
 - Design pick: option C "Peach Paper" (Lexend, peach + sky, crisp borders and paper shadows); the temporary `#/designs` page was removed after the pick.
 - Added `scripts/check-pages.mjs` (playwright-core + installed Chrome) as the headless browser check used in mechanical verification.
+- Gemini model ID is `gemini-3.5-flash-lite` and low thinking is `thinkingConfig.thinkingLevel: LOW` (verified against the docs and SDK types, and with a real call) — this was open in the spec.
+- Lesson-day buttons appear on the plan card when the curriculum has no dates — the "How often are lessons?" question became tappable day buttons instead of a free-text reply, matching "simple buttons" in the PRD.
+- Dev-only test keys live in git-ignored `.env.local`, read only by `scripts/` checks; the app still takes keys from Settings.
