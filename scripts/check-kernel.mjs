@@ -5,7 +5,7 @@ import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
 
 const SP = process.argv[2] ?? '.'
-const { GEMINI_KEY, GROQ_KEY } = loadEnv()
+const { OPENROUTER_KEY, GROQ_KEY = '' } = loadEnv()
 const U = process.env.BASE ?? 'http://localhost:5173/'
 const b = await chromium.launch({ channel: 'chrome' })
 const p = await b.newPage({ viewport: { width: 390, height: 844 } })
@@ -15,8 +15,8 @@ p.on('console', (m) => m.type() === 'warning' && console.log('warn:', m.text()))
 
 await p.goto(U + '#/')
 await p.goto(U + '#/settings')
-await p.fill('input[name=groq]', GROQ_KEY)
-await p.fill('input[name=gemini]', GEMINI_KEY)
+await p.fill('input[name=openrouter]', OPENROUTER_KEY)
+await p.fill('input[name=groq]', GROQ_KEY) // Groq first for speech, as a teacher with both keys would have it
 await p.click('button[type=submit]')
 await p.waitForURL(U + '#/')
 await p.goto(U + '#/spaces')

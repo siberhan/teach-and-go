@@ -1,9 +1,9 @@
-// Slice 4 risk check: in the browser, demo lecture → 16 kHz mono PCM → FLAC (worker) → Groq transcript.
+// Slice 4 risk check: in the browser, demo lecture → 16 kHz mono PCM → FLAC (worker) → OpenRouter Whisper transcript.
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
 
-const { GROQ_KEY } = loadEnv()
+const { OPENROUTER_KEY } = loadEnv()
 const b = await chromium.launch({ channel: 'chrome' })
 const p = await b.newPage()
 p.on('pageerror', (e) => console.log('pageerror', e.message))
@@ -13,7 +13,7 @@ const out = await p.evaluate(
   async ({ audio, key }) => {
     const { fileToPcm } = await import('/src/lib/audio/importFile.ts')
     const { toFlacParts } = await import('/src/lib/audio/split.ts')
-    const { transcribe } = await import('/src/lib/groq.ts')
+    const { transcribe } = await import('/src/lib/openrouter.ts')
     const bytes = Uint8Array.from(atob(audio), (c) => c.charCodeAt(0))
     const pcm = await fileToPcm(new Blob([bytes]))
     const parts = await toFlacParts(pcm)
@@ -21,7 +21,7 @@ const out = await p.evaluate(
     const text = await transcribe(key, parts[0])
     return { seconds: pcm.length / 16000, parts: parts.length, flacBytes: parts[0].size, head, text }
   },
-  { audio, key: GROQ_KEY },
+  { audio, key: OPENROUTER_KEY },
 )
 console.log(out)
 await b.close()

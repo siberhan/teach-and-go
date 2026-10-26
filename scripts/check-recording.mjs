@@ -5,7 +5,7 @@ import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
 
 const [wav, SP = '.'] = process.argv.slice(2)
-const { GEMINI_KEY, GROQ_KEY } = loadEnv()
+const { OPENROUTER_KEY, GROQ_KEY = '' } = loadEnv()
 const U = 'http://localhost:5173/'
 const b = await chromium.launch({
   channel: 'chrome',
@@ -15,6 +15,8 @@ const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, permissi
 const p = await ctx.newPage()
 const errs = []
 p.on('pageerror', (e) => errs.push(e.message))
+const speechHosts = []
+p.on('request', (r) => /audio\/transcriptions/.test(r.url()) && speechHosts.push(new URL(r.url()).host))
 const count = (store) =>
   p.evaluate(
     (store) =>
@@ -27,17 +29,17 @@ const count = (store) =>
       }),
     store,
   )
-async function setKeys(groq) {
+async function setKeys(key) {
   await p.goto(U + '#/settings')
-  await p.fill('input[name=groq]', groq)
-  await p.fill('input[name=gemini]', GEMINI_KEY)
+  await p.fill('input[name=openrouter]', key)
+  await p.fill('input[name=groq]', GROQ_KEY)
   await p.click('button[type=submit]')
   await p.waitForURL((u) => !u.hash.includes('settings'))
 }
 const result = {}
 
 await p.goto(U + '#/')
-await setKeys(GROQ_KEY)
+await setKeys(OPENROUTER_KEY)
 await p.goto(U + '#/spaces')
 await p.click('button:visible:text("New space")')
 await p.fill('input[name=name]:visible', 'Live test')
@@ -66,7 +68,7 @@ await p.waitForSelector('text=Saved to memory', { timeout: 120000 })
 result.liveAudioLeft = await count('audio')
 
 // 3. Bad key → failed with message, audio kept → Retry with the right key → done.
-await setKeys('gsk_wrong')
+await setKeys('sk-or-wrong')
 await p.goto(spaceUrl)
 await p.click('text=New recording')
 await p.click('[aria-label="Record"]')
@@ -75,7 +77,7 @@ await p.click('[aria-label="Stop"]')
 await p.waitForSelector('text=Nothing was lost', { timeout: 60000 })
 result.failedText = await p.innerText('.hero')
 result.failedAudioKept = await count('audio')
-await setKeys(GROQ_KEY)
+await setKeys(OPENROUTER_KEY)
 await p.goto(spaceUrl)
 await p.click('text=Not analyzed')
 await p.click('text=Retry')
@@ -95,6 +97,7 @@ result.afterResume = await p.$$eval('.row-link', (rows) => rows.map((r) => r.inn
 result.finalAudio = await count('audio')
 await p.screenshot({ path: SP + '/s5-space.png' })
 
+result.speechHosts = [...new Set(speechHosts)]
 console.log(result, errs)
 await b.close()
 const ok =
@@ -106,6 +109,8 @@ const ok =
   result.afterResume.length === 3 &&
   !result.afterResume.some((r) => /Analyzing|Not analyzed/.test(r)) &&
   result.finalAudio === 0 &&
+  // With a Groq key, speech goes to Groq (OpenRouter only as fallback).
+  (!GROQ_KEY || result.speechHosts.join() === 'api.groq.com') &&
   !errs.length
 console.log(ok ? 'PASS' : 'FAIL')
 process.exit(ok ? 0 : 1)

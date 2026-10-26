@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
+import AssistantButton from '../components/AssistantButton.tsx'
 import Notifications from '../components/Notifications.tsx'
 
 export default function Start() {
   return (
     <main className="screen">
       <div className="start-top">
+        <AssistantButton />
         <Notifications />
       </div>
       <div className="hero">

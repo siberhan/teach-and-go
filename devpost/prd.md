@@ -13,7 +13,7 @@ Source: `scope.md > The Unique Kernel`, `scope.md > Who It's For`.
 Source: `scope.md > The Core Loop`.
 
 1. The teacher opens Teach&Go. The **Start screen** shows a Start button, a Settings button, and notifications at the top (upcoming lessons).
-2. First time: they open **Settings** and enter their own Groq and Gemini API keys.
+2. First time: they open **Settings** and enter their own OpenRouter API key (and, optionally, a free Groq key for speech-to-text).
 3. They tap **Start** → the **Spaces screen**: their spaces listed top to bottom, the one with the nearest upcoming lesson on top. They tap **New space** and type a name (e.g. a student's name or a class name).
 4. Inside the new space they open **Space settings** and send what the AI needs: a document (e.g. a curriculum), a screenshot or photo, and/or text (typed or dictated by voice).
 5. The AI replies with its understanding of the plan and asks simple confirmation questions with buttons ("Is this your curriculum?", "How often are lessons?", "Should I make a lesson plan?"). The teacher confirms or sends a correction.
@@ -27,7 +27,7 @@ Success: step 9 shows the correct stopping point and the correct deferred-topic 
 ## Screens and Layout
 
 1. **Start screen** — Start button, Settings button, notifications at the top (upcoming lessons; tapping one shows the plan).
-2. **Settings** — Groq and Gemini API key fields.
+2. **Settings** — OpenRouter key field, plus an optional Groq key field.
 3. **Spaces screen** — list of spaces, top to bottom, nearest upcoming lesson first. "New space" button.
 4. **Space screen** — Thread card on top; "New recording" button; lesson list below (newest first, an in-progress analysis shows on top with a loading indicator); entry to Space settings.
 5. **Space settings** — space details plus a single composer to send documents, screenshots, photos and text/voice-dictated text to the AI; AI replies with plan confirmation buttons.
@@ -48,7 +48,7 @@ Works the same on phone and computer (responsive). It is a website that can be i
 ## Features and Behavior
 
 ### Settings and API Keys
-The teacher brings their own free Groq and Gemini keys, so the app stays free.
+The teacher brings their own OpenRouter key; a lesson costs about 1.5 cents of their own credit, and the app itself stays free and open source. An optional free Groq key runs speech-to-text at no cost, with OpenRouter as the automatic fallback. *(Changed during the build from free Groq + Gemini keys — see Stretch Goals.)*
 - [ ] Keys entered in Settings are remembered after closing and reopening the app.
 - [ ] Without keys, any AI action sends the teacher to Settings with a short message instead of failing silently.
 
@@ -99,14 +99,14 @@ After the lesson ends, the AI reads the lesson text against the plan and saves t
 - **No spaces yet** — Spaces screen shows only "New space".
 - **New space, no lessons** — Thread card invites setup or a first recording instead of showing a stopping point.
 - **Analysis running** — loading indicator on the finished screen and on top of the lesson list.
-- **Analysis failed / free limit reached** — the lesson shows a short error ("Free limit reached — try again later. Nothing was lost.") and a retry.
+- **Analysis failed / out of credit / too many requests** — the lesson shows a short error that names the cause and ends with "Nothing was lost.", plus a retry.
 - **Document too long** — rejected with a clear message.
 - **Persistence** — spaces, plans, lessons and memory stay after closing the app. Raw audio does not.
 
 ## Product Decisions
 - Name **Teach&Go**, slogan "Teach and go. We keep the thread." — learner's choice.
 - **No agent framework** (pi agent dropped). Simple, direct AI calls with low thinking effort — fewer tokens, so free limits go further. Supersedes the pi agent note in `scope.md > Inspiration & Identity`.
-- **Bring your own Groq and Gemini keys** — keeps the app free and open source.
+- **Bring your own OpenRouter key (optional free Groq key)** — keeps the app free and open source, with no server and no shared bill.
 - **Composer instead of a chatbot** — avoids long conversations that use up free limits.
 - **Document size limit** — big documents are rejected rather than breaking free limits.
 - **Short covered-topics summaries** — output tokens cost too.
@@ -124,12 +124,28 @@ Everything in **Features and Behavior** above, on the screens in **Screens and L
 - **Live listening during the lesson** — after-lesson analysis is enough.
 - **Accounts, login, sharing between teachers** — memory lives on the teacher's own device for now.
 
+## Stretch Goals Added During the Build
+None of these were in the original POC — they were kept out so the kernel (the thread between lessons) came first. Once the kernel worked end to end and time allowed, the learner's own hands-on testing at final review turned up each of them, and they were added. Each one has its own browser check in `scripts/`.
+
+- **A recording that never gets lost** — the teacher can leave the recording screen to read last lesson's notes; recording keeps going, and a bar at the bottom of every screen shows the time and leads back. **Pause / Resume** for breaks.
+- **One bell for upcoming lessons** — a teacher with many students got a stack of notices on the Start screen; they are now one notification menu with a count.
+- **The routine is never guessed** — tutors teach every day, every few days, twice a day, mornings or evenings. The AI fills only what the document or the teacher says; if the routine is unknown, it asks. Weekly slots with times, "every N days", twice a day, and a start date are all supported.
+- **Questions as options, not chat** — every AI question comes with 2–4 tap-able answers (A, B, C…) and the teacher can still write their own. Fast on a phone, fewer tokens, no free-form chat.
+- **Safe new documents** — adding a new PDF to a space that already has a plan never overwrites it silently. The AI gets the current plan, what was already taught, and the new document; with no clear instruction it leaves the plan as it is and asks what to do (add after / replace what's not taught yet / add detail). Taught topics are never removed.
+- **Schedule view** — a timeline of when each topic will be taught, projected from the routine: done, next, and later lessons, with estimated dates marked as such.
+- **Voice assistant on every screen** — tap the sparkle, speak ("Create a space called Alex with Maya's topics", "Make the chain rule topic more detailed"). The conversation continues in a panel with a mic until the teacher closes it, and the assistant knows what is on screen. Each message is still **one** request that picks **one** action from a short fixed list; anything that changes data shows a confirmation card first (opening a space needs none). Deleting asks a normal confirmation.
+- **Bring your own key, one key** — free tiers were often overloaded during testing, so the app moved to the teacher's own OpenRouter key. The model was chosen by measurement, not by name: GPT-6 Luna passed the routine check that MiMo-V2.6-Flash failed, faster and cheaper (`scripts/compare-models.mjs`). A 30-minute lesson costs about $0.015. An optional free Groq key is used first for speech-to-text, with OpenRouter as the automatic fallback.
+
+Example: "Create a space called Alex with Maya's topics" → a confirmation card → new space Alex with a copy of Maya's plan (topics only; Maya's lesson memory stays with Maya).
+
 ## Possible Later Enhancements
+- A larger assistant: more actions, several steps in one request.
 - Weekly overview of what was covered across lessons.
-- Paid/higher-limit AI options for long documents and long lessons.
+- Let the teacher pick the model in Settings.
+- An agent library (for example the Vercel AI SDK) if the assistant ever needs multi-step plans; today each message is one small request, so it is not needed.
 
 ## Non-Goals
-- Not a free-form AI chatbot — it uses tokens and is not the kernel.
+- Not a free-form AI chatbot — it uses tokens and is not the kernel. (The stretch-goal assistant keeps a short conversation, but each message is one request that picks one app action, with a confirmation before changes.)
 - Never stores raw audio — privacy promise.
 - No agent framework — simplicity and token cost.
 

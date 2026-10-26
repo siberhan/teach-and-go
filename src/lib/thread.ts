@@ -1,4 +1,5 @@
 import type { Deferred, Lesson, Plan, Topic } from './db.ts'
+import { dayStart, lessonTimes, scheduleOf } from './schedule.ts'
 
 // Pure functions, no AI: everything the Thread card shows is computed from the notebook.
 
@@ -43,10 +44,7 @@ export function threadCard(plan: Plan | undefined, lessons: Lesson[]): ThreadCar
   }
 }
 
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const dayStart = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate())
-
-// Next lesson date for a plan: the first topic date from today, or the next lesson weekday.
+// Next lesson date for a plan: the first topic date from today, or the next lesson in the routine.
 export function nextLessonDate(plan: Plan | undefined, now = new Date()): Date | undefined {
   if (!plan) return undefined
   const today = dayStart(now)
@@ -55,12 +53,8 @@ export function nextLessonDate(plan: Plan | undefined, now = new Date()): Date |
     .filter((d): d is Date => !!d && d >= today)
     .sort((a, b) => +a - +b)
   if (dated.length) return dated[0]
-  if (!plan.lessonDays?.length) return undefined
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i)
-    if (plan.lessonDays.includes(WEEKDAYS[d.getDay()])) return d
-  }
-  return undefined
+  const s = scheduleOf(plan)
+  return s ? lessonTimes(s, now, 1)[0]?.date : undefined
 }
 
 export interface Upcoming {
@@ -97,4 +91,13 @@ export function dayLabel(date: Date, now = new Date()): string {
   if (diff === 0) return 'Today'
   if (diff === 1) return 'Tomorrow'
   return date.toLocaleDateString(undefined, diff < 7 ? { weekday: 'long' } : { month: 'short', day: 'numeric' })
+}
+
+// Index of the next topic; topics before it count as taught.
+export function progressIndex(plan: Plan | undefined, lessons: Lesson[]): number {
+  const topics = plan?.topics ?? []
+  const last = lastDoneLesson(lessons)
+  if (!last) return 0
+  const next = nextTopic(plan, last.stoppingPoint)
+  return next ? topics.indexOf(next) : topics.length
 }

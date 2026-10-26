@@ -1,6 +1,6 @@
 import { db, newId, type Lesson } from './db.ts'
-import { analyzeLesson } from './gemini.ts'
-import { transcribe } from './groq.ts'
+import { analyzeLesson } from './ai.ts'
+import { speechToText } from './speech.ts'
 import { MissingKeysError, requireKeys } from './settings.ts'
 import { lastDoneLesson, openDeferred } from './thread.ts'
 import { fileToPcm } from './audio/importFile.ts'
@@ -41,17 +41,17 @@ export async function runAnalysis(lessonId: string) {
     await db.lessons.update(lessonId, { status: 'analyzing', error: undefined })
     const keys = await requireKeys()
 
-    // Each part gets the end of the previous text as context, so cuts don't lose meaning.
+    // Parts overlap by a few seconds, and each gets the end of the previous text as context (Groq), so cuts don't lose meaning.
     let transcript = ''
     for (const part of audio.parts) {
-      const text = await transcribe(keys.groqKey, part, transcript.slice(-200) || undefined)
+      const text = await speechToText(keys, part, transcript.slice(-200) || undefined)
       transcript += (transcript ? ' ' : '') + text
     }
 
     const space = await db.spaces.get(lesson.spaceId)
     const earlier = (await db.lessons.where('spaceId').equals(lesson.spaceId).toArray()).filter((l) => l.id !== lessonId)
     const open = openDeferred(earlier)
-    const memory = await analyzeLesson(keys.geminiKey, space?.plan, lastDoneLesson(earlier)?.stoppingPoint, open, transcript)
+    const memory = await analyzeLesson(keys.openrouterKey, space?.plan, lastDoneLesson(earlier)?.stoppingPoint, open, transcript)
 
     const topicIds = new Set(space?.plan?.topics.map((t) => t.id))
     const validTopic = (id?: string) => (id && topicIds.has(id) ? id : undefined)
@@ -80,8 +80,9 @@ export async function runAnalysis(lessonId: string) {
 }
 
 function failureMessage(e: unknown): string {
-  if (e instanceof MissingKeysError) return 'Add your keys in Settings, then retry. Nothing was lost.'
-  if (/429|quota|rate|limit|exhausted/i.test(String(e))) return 'Free limit reached — try again later. Nothing was lost.'
+  if (e instanceof MissingKeysError) return 'Add your OpenRouter key in Settings, then retry. Nothing was lost.'
+  if (/\b402\b|credit/i.test(String(e))) return 'Your OpenRouter credit ran out — top it up, then retry. Nothing was lost.'
+  if (/429|rate|limit/i.test(String(e))) return 'Too many requests — try again in a minute. Nothing was lost.'
   return 'Analysis failed — try again later. Nothing was lost.'
 }
 

@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
+import Assistant from './components/Assistant.tsx'
 import RecordingBar from './components/RecordingBar.tsx'
 import Shell from './components/Shell.tsx'
 import LessonDetail from './screens/LessonDetail.tsx'
 import LessonFinished from './screens/LessonFinished.tsx'
 import NewRecording from './screens/NewRecording.tsx'
+import Schedule from './screens/Schedule.tsx'
 import Settings from './screens/Settings.tsx'
 import Space from './screens/Space.tsx'
 import Spaces from './screens/Spaces.tsx'
@@ -23,11 +25,13 @@ export default function App() {
         <Route path="/space/:id/settings" element={<SpaceSettings />} />
         <Route path="/space/:id/record" element={<NewRecording />} />
         <Route path="/space/:id/thread" element={<ThreadDetail />} />
+        <Route path="/space/:id/schedule" element={<Schedule />} />
         <Route path="/lesson/:lessonId" element={<LessonDetail />} />
         <Route path="/lesson/:lessonId/finished" element={<LessonFinished />} />
       </Route>
     </Routes>
     <RecordingBar />
+    <Assistant />
     </>
   )
 }

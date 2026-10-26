@@ -6,7 +6,7 @@ const p = await b.newPage({ viewport: { width: 390, height: 800 } })
 const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => m.type()==='error' && errs.push(m.text()))
 const U = process.env.BASE ?? 'http://localhost:5173/'
 await p.goto(U + '#/'); await p.click('text=Settings')
-await p.fill('input[name=groq]', 'gsk_test'); await p.fill('input[name=gemini]', 'AIza_test'); await p.click('button[type=submit]')
+await p.fill('input[name=openrouter]', 'sk-or-test'); await p.click('button[type=submit]')
 await p.waitForURL(U + '#/')
 for (const n of ['Maya', 'Class 7B']) {
   await p.goto(U + '#/spaces'); await p.click('button:visible:text("New space")'); await p.fill('input[name=name]:visible', n); await p.click('button:visible:text("Create")')
@@ -17,8 +17,8 @@ await p.reload(); await p.goto(U + '#/spaces'); await p.reload()
 await p.waitForSelector('.row')
 const names = await p.$$eval('.row span:first-child', els => els.map(e => e.textContent))
 await p.goto(U + '#/settings'); await p.reload(); await p.waitForTimeout(300)
-const keys = [await p.inputValue('input[name=groq]'), await p.inputValue('input[name=gemini]')]
+const keys = [await p.inputValue('input[name=openrouter]')]
 console.log({ names, keys, errs })
 await p.goto(U + '#/spaces'); await p.screenshot({ path: SP + '/s2-spaces.png' })
 await b.close()
-process.exit(names.length === 2 && keys[0] === 'gsk_test' && keys[1] === 'AIza_test' && !errs.length ? 0 : 1)
+process.exit(names.length === 2 && keys[0] === 'sk-or-test' && !errs.length ? 0 : 1)

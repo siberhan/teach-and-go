@@ -51,6 +51,8 @@ Build order: **design the interface first** and review it early, so mistakes are
 - Live listening during the lesson (analysis after the lesson is enough for now).
 - Accounts, login, sharing between teachers.
 - Mobile app; deployment (optional for the hackathon).
+- **Stretch goal — voice assistant (added during the build, time allowed):** one button on every screen; the teacher says what they want ("Create a space called Alex with Maya's topics"), the app shows one confirmation card, and does it. Kept out of the original POC so the kernel came first; added at final review once the kernel worked.
+- **Also added during the build, time allowed** (details in `prd.md > Stretch Goals Added During the Build`): recording that keeps going across screens with pause/resume, a notification menu, a schedule view, a routine the AI never guesses, questions as tap-able options, safe handling of new documents, and bring-your-own OpenRouter key (optional free Groq key for speech).
 
 ## Explicitly Cut
 - A separate weekly-plan feature — the curriculum (with dates, if it has them) is the plan; if there is none, the AI asks and helps make one.

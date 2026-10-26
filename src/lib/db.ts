@@ -4,19 +4,30 @@ import Dexie, { type EntityTable } from 'dexie'
 
 export interface Settings {
   id: 'main'
-  groqKey: string
-  geminiKey: string
+  openrouterKey: string
+  groqKey?: string // optional: free speech-to-text, OpenRouter is the fallback
 }
 
 export interface Topic {
   id: string
   title: string
   date?: string // YYYY-MM-DD, if the curriculum has dates
+  lessons?: number // how many lessons the topic takes, only if the teacher said so (default 1)
+}
+
+// The teacher's routine. Only filled from what the teacher or the document says, never guessed.
+// Either weekly slots (two lessons on one day = two slots) or every N days at given times.
+export interface Schedule {
+  slots?: { day: string; time?: string }[] // day: 'Mon'…'Sun', time: 'HH:MM'
+  everyDays?: number
+  times?: string[]
+  startDate?: string // YYYY-MM-DD
 }
 
 export interface Plan {
   summary: string
-  lessonDays?: string[] // e.g. ['Mon', 'Thu']
+  lessonDays?: string[] // older plans: e.g. ['Mon', 'Thu']; new plans use schedule
+  schedule?: Schedule
   topics: Topic[]
 }
 

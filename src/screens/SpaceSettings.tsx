@@ -1,43 +1,40 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Composer from '../components/Composer.tsx'
+import { PlanTopics, QuestionCard, ScheduleLine } from '../components/PlanView.tsx'
 import TopBar from '../components/TopBar.tsx'
-import { db, type Plan } from '../lib/db.ts'
-import { buildPlan, revisePlan, type PlanDraft } from '../lib/gemini.ts'
+import { db } from '../lib/db.ts'
+import { planTurn, type Attachment, type PlanDraft } from '../lib/ai.ts'
 import { MissingKeysError, requireKeys } from '../lib/settings.ts'
+import { progressIndex } from '../lib/thread.ts'
 
-const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
-function PlanTopics({ plan }: { plan: Plan }) {
-  return (
-    <ol className="topics">
-      {plan.topics.map((t) => (
-        <li key={t.id}>
-          {t.title}
-          {t.date && <span className="muted"> · {t.date}</span>}
-        </li>
-      ))}
-    </ol>
-  )
-}
+const toAttachments = (files: File[]): Attachment[] => files.map((f) => ({ name: f.name, mimeType: f.type, data: f }))
 
 export default function SpaceSettings() {
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const space = useLiveQuery(() => db.spaces.get(id), [id])
+  const lessons = useLiveQuery(() => db.lessons.where('spaceId').equals(id).toArray(), [id])
   const [draft, setDraft] = useState<PlanDraft | null>(null)
-  const [correcting, setCorrecting] = useState(false)
+  // Documents from the turn that asked a question: sent again with the answer, so the AI can act on them.
+  const [askedFiles, setAskedFiles] = useState<Attachment[]>([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
-  async function run(task: (geminiKey: string) => Promise<PlanDraft>) {
+  async function send(files: File[], text: string) {
+    if (!space) return
     setError('')
     setBusy(true)
     try {
       const keys = await requireKeys()
-      setDraft(await task(keys.geminiKey))
-      setCorrecting(false)
+      const current = draft?.plan ?? space.plan
+      const taught = current ? current.topics.slice(0, progressIndex(current, lessons ?? [])).map((t) => t.title) : []
+      const answering = draft?.question
+      const sent = files.length ? toAttachments(files) : answering ? askedFiles : []
+      const next = await planTurn(keys.openrouterKey, { plan: current, taught, files: sent, message: text, asked: answering })
+      setDraft(next)
+      setAskedFiles(next.question ? sent : [])
     } catch (e) {
       if (e instanceof MissingKeysError) return navigate('/settings', { state: { notice: e.message } })
       console.warn(e)
@@ -47,64 +44,37 @@ export default function SpaceSettings() {
     }
   }
 
-  async function send(files: File[], text: string) {
-    if (draft && correcting) return run((key) => revisePlan(key, draft.plan, text))
-    if (space?.plan && !draft && !files.length) return run((key) => revisePlan(key, space.plan!, text))
-    await run((key) => buildPlan(key, files.map((f) => ({ name: f.name, mimeType: f.type, data: f })), text))
-  }
-
   async function confirm() {
     if (!draft) return
-    await db.spaces.update(id, { plan: draft.plan })
+    await db.spaces.update(id, { plan: { ...draft.plan, lessonDays: undefined } })
     setDraft(null)
     navigate(`/space/${id}`)
   }
 
-  function toggleDay(day: string) {
-    if (!draft) return
-    const days = draft.plan.lessonDays ?? []
-    const lessonDays = days.includes(day) ? days.filter((d) => d !== day) : DAYS.filter((d) => d === day || days.includes(d))
-    setDraft({ ...draft, plan: { ...draft.plan, lessonDays } })
-  }
-
   if (!space) return <main className="screen" />
-  const needsDays = draft && !draft.plan.topics.some((t) => t.date)
+  // Only a question, the plan itself is untouched (e.g. a new document without instructions).
+  const onlyAsking = draft && !draft.changed && space.plan
+  const shown = draft?.plan ?? space.plan
 
   return (
     <main className="screen">
       <TopBar title={space.name} back={`/space/${id}`} />
 
-      {draft ? (
+      {shown ? (
         <section className="card stack plan-card">
-          <div className="label">{draft.madeByAi ? 'I made a plan' : 'Is this your plan?'}</div>
-          <p className="plan-summary">{draft.plan.summary}</p>
-          <PlanTopics plan={draft.plan} />
-          {draft.question && <p className="remind">{draft.question}</p>}
-          {needsDays && (
-            <div className="stack-sm">
-              <div className="label">Lesson days</div>
-              <div className="days">
-                {DAYS.map((d) => (
-                  <button key={d} type="button" className={`day ${draft.plan.lessonDays?.includes(d) ? 'on' : ''}`} onClick={() => toggleDay(d)}>
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-          {!correcting && (
+          <div className="label">{!draft || onlyAsking ? 'Plan' : draft.madeByAi ? 'I made a plan' : space.plan ? 'Updated plan' : 'Is this your plan?'}</div>
+          <p className="plan-summary">{shown.summary}</p>
+          <ScheduleLine plan={shown} />
+          <PlanTopics plan={shown} />
+          {space.plan && !draft && <Link className="link" to={`/space/${id}/schedule`}>See the schedule</Link>}
+          {draft?.question && <QuestionCard question={draft.question} busy={busy} onPick={(a) => send([], a)} />}
+          {onlyAsking && <button className="btn btn-ghost" onClick={() => setDraft(null)}>Leave the plan as it is</button>}
+          {draft && !onlyAsking && (
             <div className="row-actions">
-              <button className="btn btn-soft" onClick={() => setCorrecting(true)}>Correct</button>
+              <button className="btn btn-soft" onClick={() => setDraft(null)}>Cancel</button>
               <button className="btn btn-primary" onClick={confirm}>Confirm</button>
             </div>
           )}
-        </section>
-      ) : space.plan ? (
-        <section className="card stack plan-card">
-          <div className="label">Plan</div>
-          <p className="plan-summary">{space.plan.summary}</p>
-          {space.plan.lessonDays?.length ? <p className="muted">{space.plan.lessonDays.join(' · ')}</p> : null}
-          <PlanTopics plan={space.plan} />
         </section>
       ) : (
         <p className="intro">Send your curriculum, a photo of it, or a short note.</p>
@@ -112,14 +82,13 @@ export default function SpaceSettings() {
 
       {error && <p className="error">{error}</p>}
 
-      {(!draft || correcting) && (
-        <Composer
-          busy={busy}
-          allowFiles={!correcting}
-          placeholder={correcting ? 'What should change?' : space.plan ? 'Change the plan, or send a new curriculum' : 'e.g. "Lessons on Mon and Thu, we stopped at limits"'}
-          onSend={send}
-        />
-      )}
+      <Composer
+        busy={busy}
+        placeholder={
+          draft?.question ? 'Your answer' : draft ? 'What should change?' : space.plan ? 'Change the plan or routine, or send a new document' : 'e.g. "Lessons on Tue and Fri at 7 pm, we stopped at limits"'
+        }
+        onSend={send}
+      />
     </main>
   )
 }

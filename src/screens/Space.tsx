@@ -20,6 +20,7 @@ export default function Space() {
         <div className="stack">
           <ThreadCard card={threadCard(space.plan, lessons)} spaceId={id} />
           <Link className="btn btn-primary" to={`/space/${id}/record`}>New recording</Link>
+          {space.plan && <Link className="btn btn-soft" to={`/space/${id}/schedule`}>Schedule</Link>}
         </div>
         <div className="list">
           <div className="label desktop-only">Lessons</div>

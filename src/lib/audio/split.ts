@@ -1,17 +1,14 @@
 import { encodeFlac } from './flac.ts'
 
 export const SAMPLE_RATE = 16000
-const MAX_PART_BYTES = 24 * 1024 * 1024 // Groq free tier allows 25 MB per file
-const OVERLAP_SEC = 5
+const PART_SEC = 5 * 60 // short parts keep each speech-to-text request well under the provider's time limit
+const OVERLAP_SEC = 3
 
-// Encodes the whole lesson; if the FLAC is too big for Groq, re-encodes it as
-// overlapping parts so no words are lost at the cuts.
+// Encodes the lesson as overlapping FLAC parts of a few minutes each, so no words are lost at the cuts.
 export async function toFlacParts(pcm: Float32Array): Promise<Blob[]> {
-  const whole = await encodeFlac(pcm, SAMPLE_RATE)
-  if (whole.size <= MAX_PART_BYTES) return [whole]
+  if (pcm.length <= (PART_SEC + 30) * SAMPLE_RATE) return [await encodeFlac(pcm, SAMPLE_RATE)]
 
-  const count = Math.ceil(whole.size / (MAX_PART_BYTES * 0.9))
-  const step = Math.ceil(pcm.length / count)
+  const step = PART_SEC * SAMPLE_RATE
   const overlap = OVERLAP_SEC * SAMPLE_RATE
   const parts: Blob[] = []
   for (let start = 0; start < pcm.length; start += step) {

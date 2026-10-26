@@ -13,11 +13,11 @@ Teach&Go remembers where each lesson stopped — and every "I'll explain this la
 
 - There is no server. Spaces, plans and lesson memory live in your browser (IndexedDB), on your own device.
 - Raw lesson audio is kept only until the analysis succeeds, then deleted. Uploaded documents are never stored — only the plan made from them.
-- You bring your own free API keys; they stay on your device.
+- You bring your own OpenRouter API key (about $0.015 per 30-minute lesson); it stays on your device.
 
 ## Try it
 
-You need free keys from [Groq](https://console.groq.com/keys) (speech to text) and [Google AI Studio](https://aistudio.google.com/apikey) (Gemini). Enter them in **Settings**.
+You need an [OpenRouter](https://openrouter.ai/settings/keys) key. Enter it in **Settings**. Optionally add a free [Groq](https://console.groq.com/keys) key: speech-to-text then runs on Groq's free tier, and falls back to OpenRouter if Groq fails.
 
 Run locally (Node.js 20+):
 
@@ -34,8 +34,9 @@ Install it like an app: in Chrome, use **Install app** in the address bar (deskt
 ## How it works
 
 - **React + TypeScript + Vite**, installable as a PWA.
-- **Groq Whisper** (`whisper-large-v3-turbo`) turns lesson audio into text. Audio is recorded as 16 kHz mono FLAC in the browser ([libflac.js](https://github.com/mmig/libflac.js), MIT) and split into overlapping parts if it is over 25 MB.
-- **Gemini** (`gemini-3.5-flash-lite`, low thinking) reads the curriculum once into a plan, and after each lesson returns covered topics, the stopping point and postponed topics — each linked to a plan topic.
+- **Whisper large v3** turns lesson audio into text — through [OpenRouter](https://openrouter.ai), or Groq's free tier first if you add a Groq key. Audio is recorded as 16 kHz mono FLAC in the browser ([libflac.js](https://github.com/mmig/libflac.js), MIT) and split into overlapping ~5-minute parts.
+- **GPT-6 Luna** (through OpenRouter, reasoning off, strict JSON output) reads the curriculum once into a plan, asks about your routine instead of guessing it, and after each lesson returns covered topics, the stopping point and postponed topics — each linked to a plan topic.
+- A **voice assistant** on every screen turns what you say into one app action, with a confirmation before anything changes.
 - The thread card is computed locally with no AI call: the next planned topic plus any postponed topic linked to it.
 
 Code map: screens in `src/screens/`, logic in `src/lib/` (`analysis.ts` runs the background lesson analysis, `thread.ts` builds the thread card), planning docs in `devpost/`.
@@ -46,7 +47,7 @@ Push to `main` on GitHub with Pages set to "GitHub Actions" — `.github/workflo
 
 ## Development checks
 
-`scripts/` holds the browser checks used while building (they use your installed Chrome). Checks that call the AI read test keys from a git-ignored `.env.local` (`GEMINI_KEY=…`, `GROQ_KEY=…`).
+`scripts/` holds the browser checks used while building (they use your installed Chrome). Checks that call the AI read test keys from a git-ignored `.env.local` (`OPENROUTER_KEY=…`, optional `GROQ_KEY=…`).
 
 ## License
 
