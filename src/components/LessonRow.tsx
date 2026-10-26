@@ -9,7 +9,7 @@ export default function LessonRow({ lesson }: { lesson: Lesson }) {
         {lesson.status === 'analyzing' ? (
           <span className="analyzing"><span className="spinner" /> Analyzing…</span>
         ) : lesson.status === 'failed' ? (
-          <span className="error">Not analyzed</span>
+          <span className="error">Not analyzed · Retry</span>
         ) : (
           lesson.covered?.slice(0, 2).join(', ') || 'Lesson'
         )}

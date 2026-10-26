@@ -1,5 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useParams } from 'react-router-dom'
+import RetryButton from '../components/RetryButton.tsx'
 import TopBar from '../components/TopBar.tsx'
 import { db } from '../lib/db.ts'
 import { duration, shortDate } from '../lib/format.ts'
@@ -14,7 +15,12 @@ export default function LessonDetail() {
       <TopBar title={shortDate(lesson.createdAt)} back={`/space/${lesson.spaceId}`} />
       <p className="muted">{duration(lesson.durationSec)}</p>
       {lesson.status === 'analyzing' && <p className="analyzing"><span className="spinner" /> Analyzing…</p>}
-      {lesson.status === 'failed' && <p className="error">{lesson.error}</p>}
+      {lesson.status === 'failed' && (
+        <>
+          <p className="error">{lesson.error}</p>
+          <RetryButton lessonId={lesson.id} />
+        </>
+      )}
       {lesson.status === 'done' && (
         <>
           <section className="card stack-sm">

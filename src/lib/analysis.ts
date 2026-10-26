@@ -1,7 +1,7 @@
 import { db, newId, type Lesson } from './db.ts'
 import { analyzeLesson } from './gemini.ts'
 import { transcribe } from './groq.ts'
-import { requireKeys } from './settings.ts'
+import { MissingKeysError, requireKeys } from './settings.ts'
 import { lastDoneLesson, openDeferred } from './thread.ts'
 import { fileToPcm } from './audio/importFile.ts'
 import { SAMPLE_RATE, toFlacParts } from './audio/split.ts'
@@ -19,9 +19,11 @@ export async function startLessonFromPcm(spaceId: string, pcm: Float32Array): Pr
     status: 'analyzing',
   }
   await db.lessons.add(lesson)
-  const parts = await toFlacParts(pcm)
-  await db.audio.put({ lessonId: lesson.id, parts })
-  void runAnalysis(lesson.id)
+  // Encoding can take a few seconds for long lessons, so it runs after the finished screen opens.
+  void toFlacParts(pcm)
+    .then((parts) => db.audio.put({ lessonId: lesson.id, parts }))
+    .then(() => runAnalysis(lesson.id))
+    .catch(() => db.lessons.update(lesson.id, { status: 'failed', error: 'The recording could not be saved. Please record again.' }))
   return lesson
 }
 
@@ -71,8 +73,23 @@ export async function runAnalysis(lessonId: string) {
     })
   } catch (e) {
     console.warn('analysis failed', e)
-    await db.lessons.update(lessonId, { status: 'failed', error: 'Free limit reached — try again later. Nothing was lost.' })
+    await db.lessons.update(lessonId, { status: 'failed', error: failureMessage(e) })
   } finally {
     running.delete(lessonId)
+  }
+}
+
+function failureMessage(e: unknown): string {
+  if (e instanceof MissingKeysError) return 'Add your keys in Settings, then retry. Nothing was lost.'
+  if (/429|quota|rate|limit|exhausted/i.test(String(e))) return 'Free limit reached — try again later. Nothing was lost.'
+  return 'Analysis failed — try again later. Nothing was lost.'
+}
+
+// On app start: continue lessons that were still analyzing when the app closed.
+export async function resumePending() {
+  const pending = await db.lessons.where('status').equals('analyzing').toArray()
+  for (const lesson of pending) {
+    if (await db.audio.get(lesson.id)) void runAnalysis(lesson.id)
+    else await db.lessons.update(lesson.id, { status: 'failed', error: 'The recording was not saved. Please record again.' })
   }
 }

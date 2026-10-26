@@ -20,7 +20,7 @@ export default function Spaces() {
 
   return (
     <main className="screen">
-      <TopBar title="Spaces" back="/" />
+      <TopBar rootScreen title="Spaces" back="/" />
       <p className="desktop-only empty-hint">Pick a space on the left, or create a new one.</p>
       <div className="list phone-only">
         {spaces?.map((s) => (

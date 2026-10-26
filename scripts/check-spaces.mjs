@@ -9,7 +9,7 @@ await p.goto(U + '#/'); await p.click('text=Settings')
 await p.fill('input[name=groq]', 'gsk_test'); await p.fill('input[name=gemini]', 'AIza_test'); await p.click('button[type=submit]')
 await p.waitForURL(U + '#/')
 for (const n of ['Maya', 'Class 7B']) {
-  await p.goto(U + '#/spaces'); await p.click('text=New space'); await p.fill('input[name=name]', n); await p.click('text=Create')
+  await p.goto(U + '#/spaces'); await p.click('button:visible:text("New space")'); await p.fill('input[name=name]:visible', n); await p.click('button:visible:text("Create")')
   await p.waitForSelector(`.topbar-title:text("${n}")`)
 }
 await p.screenshot({ path: SP + '/s2-space.png' })

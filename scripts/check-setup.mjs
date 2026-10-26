@@ -18,9 +18,9 @@ await p.fill('input[name=gemini]', GEMINI_KEY)
 await p.click('button[type=submit]')
 await p.waitForURL(U + '#/')
 await p.goto(U + '#/spaces')
-await p.click('text=New space')
-await p.fill('input[name=name]', 'Maya')
-await p.click('text=Create')
+await p.click('button:visible:text("New space")')
+await p.fill('input[name=name]:visible', 'Maya')
+await p.click('button:visible:text("Create")')
 await p.click('[aria-label="Space settings"]')
 
 // Oversized document is rejected in the browser.

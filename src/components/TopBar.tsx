@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function TopBar({ title, back, right }: { title: string; back?: string; right?: ReactNode }) {
+// rootScreen: on desktop the sidebar replaces the back arrow, so it is hidden there.
+export default function TopBar({ title, back, right, rootScreen }: { title: string; back?: string; right?: ReactNode; rootScreen?: boolean }) {
   const navigate = useNavigate()
   return (
-    <header className="topbar">
+    <header className={`topbar ${rootScreen ? 'root-screen' : ''}`}>
       <button className="icon-btn" aria-label="Back" onClick={() => (back ? navigate(back) : navigate(-1))}>
         ‹
       </button>

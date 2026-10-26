@@ -49,7 +49,7 @@ Build mode: fast
   Learner check: In your space, upload the demo lecture, leave the finished screen, come back when the loading stops, and check the Thread card: right stopping point, and the "explain later" reminder.
   Commit: `Analyze uploaded lessons and show the thread card`
 
-- [ ] **5. You can record a lesson live, dictate notes, and nothing is lost when something fails**
+- [x] **5. You can record a lesson live, dictate notes, and nothing is lost when something fails**
   Becomes usable: One-tap live recording with a timer and stop button (16 kHz mono → FLAC); mic dictation in the composer; failed analysis shows "Free limit reached — try again later. Nothing was lost." with Retry; a lesson still analyzing when the app closes resumes on next start; missing keys send you to Settings with a short message.
   Why now: Builds on the working pipeline from slice 4 — same analysis path, new input — and closes the failure modes before polishing.
   PRD ref: `prd.md > Recording a Lesson`, `prd.md > States and Boundaries`, `prd.md > Space Setup (Space settings)` (dictation)
@@ -104,3 +104,7 @@ Activity mode:
 - `stoppingPoint` gained `topicFinished` — the Thread card needs to know whether the next lesson continues the same topic or starts the next one; without it, the deferred reminder could never match the following topic.
 - Demo lecture audio is made with macOS `say` from our own script (`demo/lecture.txt`) for testing; a nicer TTS voice can replace it for the video.
 - Desktop layout added at the slice-4 checkpoint (learner feedback: screens looked phone-only and empty on a computer) — from 900 px wide, a sidebar with spaces, New space and Settings stays open beside the screen; the Space screen puts the Thread card and lessons side by side; the composer sits under the content instead of at the bottom. Phone layout is unchanged.
+- Desktop follow-up (learner feedback): content is left-aligned next to the sidebar, and the back arrow is hidden on the Spaces and Space screens on desktop (the sidebar does that job); deeper screens keep it.
+- Encoding to FLAC now runs after the "Lesson complete" screen opens — long lessons take seconds to encode, and the teacher shouldn't wait on the recording screen.
+- Failure messages are split by cause: missing keys, free limit (429/quota), or other errors — all say "Nothing was lost." and keep the audio for Retry.
+- Slice-4 hands-on checkpoint: learner tried the app on desktop and asked for the desktop layout and a dictation mic (both done); they have not yet tried plan creation and lesson analysis themselves — still open.

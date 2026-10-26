@@ -15,7 +15,7 @@ export default function Space() {
 
   return (
     <main className="screen">
-      <TopBar title={space.name} back="/spaces" right={<Link className="icon-btn" aria-label="Space settings" to={`/space/${id}/settings`}>⚙</Link>} />
+      <TopBar rootScreen title={space.name} back="/spaces" right={<Link className="icon-btn" aria-label="Space settings" to={`/space/${id}/settings`}>⚙</Link>} />
       <div className="space-grid">
         <div className="stack">
           <ThreadCard card={threadCard(space.plan, lessons)} spaceId={id} />
