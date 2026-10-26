@@ -4,6 +4,8 @@
 
 Teach&Go remembers where each lesson stopped — and every "I'll explain this later" — so a tutor or teacher starts the next lesson exactly where they left off.
 
+**Try it:** https://siberhan.me/teach-and-go/ (bring your own OpenRouter key, entered in Settings).
+
 1. Create a **space** for a student or a class.
 2. Send your curriculum (PDF, photo or a short note) in the plan conversation, by voice or text. The AI turns it into a plan and asks about your lesson routine instead of guessing it.
 3. Tap **record** at the start of a lesson (or upload a recording).
