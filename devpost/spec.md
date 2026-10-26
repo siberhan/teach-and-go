@@ -197,7 +197,7 @@ Learner decisions:
 
 Implementation details derived from these: Dexie, HashRouter, vite-plugin-pwa, `prompt` continuity between audio parts, audio kept until analysis succeeds (resolves `prd.md > Open Questions` — privacy promise kept: audio deleted as soon as analysis succeeds).
 
-Learner uncertainty discussed: **where data lives on the device** ("cookie olarak mı tutuluyor?"). Clarified: cookies are ~4 KB and are sent to servers; IndexedDB is the browser's own local database for the site, works in the installed app, and fits our data. Check during build: close and reopen the installed app and see that spaces and lessons are still there.
+Learner uncertainty discussed: **where data lives on the device** ("is it kept as a cookie?"). Clarified: cookies are ~4 KB and are sent to servers; IndexedDB is the browser's own local database for the site, works in the installed app, and fits our data. Check during build: close and reopen the installed app and see that spaces and lessons are still there.
 
 Open, check early in the build:
 1. ~~Groq CORS from the browser~~ — verified OK (see Stack).
