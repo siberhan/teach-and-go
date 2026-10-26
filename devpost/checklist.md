@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Open `http://localhost:5173/#/designs`, compare the three options on phone width and desktop width, and tell me which one you want (or what to mix).
   Commit: `Scaffold app and add chosen design tokens`
 
-- [ ] **2. You can save your keys, create spaces, and they are still there after closing**
+- [x] **2. You can save your keys, create spaces, and they are still there after closing**
   Becomes usable: Settings saves Groq and Gemini keys; Start → Spaces screen → "New space" asks only for a name and opens the new space; the Space screen shows the empty Thread card ("Set up this space or record a first lesson"). Everything survives a reload.
   Why now: The notebook (IndexedDB) is where the data model can first be wrong, and every later slice writes into it. Also answers the learner's open question about where data lives.
   PRD ref: `prd.md > Settings and API Keys`, `prd.md > Spaces`, `prd.md > States and Boundaries`

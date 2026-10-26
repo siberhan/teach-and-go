@@ -58,3 +58,45 @@ button, input, textarea { font: inherit; color: inherit; }
 .notices { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); min-height: 40px; }
 .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
 .logo { font-size: 44px; letter-spacing: -0.5px; }
+
+.small { font-size: 14px; }
+.stack { display: flex; flex-direction: column; gap: var(--space-2); }
+.link { color: var(--text); font-weight: var(--weight-bold); }
+
+/* Top bar */
+.topbar { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; min-height: 44px; }
+.topbar-title { font-size: 20px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.icon-btn { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: none; font-size: 26px; color: var(--muted); cursor: pointer; text-decoration: none; }
+.icon-slot { display: flex; justify-content: flex-end; }
+
+/* Forms */
+.field { display: flex; flex-direction: column; gap: 6px; font-weight: var(--weight-bold); }
+.input, .field input, textarea {
+  width: 100%;
+  padding: 14px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-weight: 400;
+}
+.hint { font-size: 14px; font-weight: 400; color: var(--muted); }
+.notice-box { background: var(--sky); border: var(--border); border-radius: var(--radius); padding: 12px 14px; }
+
+/* Lists */
+.list { display: flex; flex-direction: column; gap: var(--space-1); }
+.row {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--space-2);
+  background: var(--surface); border: var(--border); border-radius: var(--radius);
+  padding: 14px 16px; text-decoration: none;
+}
+.row-link:active { background: var(--soft); }
+
+/* Thread card */
+.thread {
+  background: var(--soft); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 20px; display: flex; flex-direction: column; gap: var(--space-1);
+}
+.label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.thread-stop { font-size: 26px; font-weight: var(--weight-bold); line-height: 1.2; }
+.thread-empty { font-size: 18px; }
+.remind { background: var(--sky); border-radius: 6px; padding: 10px 12px; font-size: 15px; }
