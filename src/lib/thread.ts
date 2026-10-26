@@ -70,7 +70,7 @@ export interface Upcoming {
   topic?: string
 }
 
-// Upcoming lessons across spaces, soonest first. Used for Start screen notices and space order.
+// Upcoming lessons across spaces, soonest first. Used for the Start screen bell and space order.
 export function upcomingLessons(
   spaces: { id: string; name: string; plan?: Plan }[],
   lessons: Lesson[],
