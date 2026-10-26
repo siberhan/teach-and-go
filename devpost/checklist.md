@@ -71,8 +71,8 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1 (design pick shapes every screen) and after slice 4 (the kernel works with the demo lecture)
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Early usable behavior explored — after slice 1 (design pick shapes every screen) and after slice 4 (the kernel works with the demo lecture)
+- [x] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
 
@@ -80,8 +80,8 @@ Build mode: fast
 - [x] Recording can be paused and resumed (and discarded); paused time is not recorded and the result is still one lesson
 - [x] Start screen: upcoming lessons move into a notification menu instead of stacking at the top (learner feedback: many students would cover the screen)
 - [x] Schedule view: a timeline of when each topic will be taught, from the routine (learner: "we can't see the lesson schedule")
-- [ ] Plan setup is a voice-first conversation with the agent (learner: buttons offered too few choices); it never guesses the routine and asks in the conversation; a cancelled week moves the start date
-- [ ] A new document on an existing plan is never applied silently; with no clear instruction the AI asks what to do and taught topics stay
+- [x] Plan setup is a voice-first conversation with the agent (learner: buttons offered too few choices); it never guesses the routine and asks in the conversation; a cancelled week moves the start date
+- [x] A new document on an existing plan is never applied silently; with no clear instruction the AI asks what to do and taught topics stay
 - [x] Voice assistant on every screen, as a continuing conversation with a mic; a small agent that uses several app tools per message, changes apply right away, delete asks first
 - [x] Bring your own OpenRouter key (GPT-6 Luna, reasoning off; Whisper large v3), optional free Groq key for speech with OpenRouter fallback
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
