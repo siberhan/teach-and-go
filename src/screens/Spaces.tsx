@@ -4,10 +4,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import TopBar from '../components/TopBar.tsx'
 import { db } from '../lib/db.ts'
 import { createSpace } from '../lib/spaces.ts'
+import { sortSpaces } from '../lib/thread.ts'
 
 export default function Spaces() {
   const navigate = useNavigate()
-  const spaces = useLiveQuery(() => db.spaces.orderBy('createdAt').reverse().toArray())
+  const spaces = useLiveQuery(() => db.spaces.toArray().then((all) => sortSpaces(all)))
   const [naming, setNaming] = useState(false)
   const [name, setName] = useState('')
 

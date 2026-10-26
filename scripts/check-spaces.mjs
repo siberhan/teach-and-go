@@ -4,7 +4,7 @@ const SP = process.argv[2]
 const b = await chromium.launch({ channel: 'chrome' })
 const p = await b.newPage({ viewport: { width: 390, height: 800 } })
 const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => m.type()==='error' && errs.push(m.text()))
-const U = 'http://localhost:5173/'
+const U = process.env.BASE ?? 'http://localhost:5173/'
 await p.goto(U + '#/'); await p.click('text=Settings')
 await p.fill('input[name=groq]', 'gsk_test'); await p.fill('input[name=gemini]', 'AIza_test'); await p.click('button[type=submit]')
 await p.waitForURL(U + '#/')

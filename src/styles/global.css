@@ -184,3 +184,12 @@ span.chip { cursor: default; }
 .rec.live { animation: pulse 1.6s ease-in-out infinite; }
 @keyframes pulse { 50% { box-shadow: 3px 3px 0 var(--text), 0 0 0 12px rgba(244, 185, 156, 0.35); } }
 .rec:disabled { opacity: 0.5; }
+
+/* Start screen notices */
+.notice {
+  display: flex; align-items: center; gap: 10px; max-width: 100%;
+  background: var(--surface); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 8px 14px; font-size: 15px; text-decoration: none;
+}
+.notice > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 1px solid var(--text); }

@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { db } from '../lib/db.ts'
 import { createSpace } from '../lib/spaces.ts'
+import { sortSpaces } from '../lib/thread.ts'
 
 // Desktop: a sidebar with all spaces stays open next to the current screen.
 // Phone: the sidebar is hidden and every screen is full width, as before.
 export default function Shell() {
   const navigate = useNavigate()
-  const spaces = useLiveQuery(() => db.spaces.orderBy('createdAt').reverse().toArray())
+  const spaces = useLiveQuery(() => db.spaces.toArray().then((all) => sortSpaces(all)))
   const [naming, setNaming] = useState(false)
   const [name, setName] = useState('')
 

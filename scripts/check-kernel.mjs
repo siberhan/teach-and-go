@@ -6,7 +6,7 @@ import { loadEnv } from './env.mjs'
 
 const SP = process.argv[2] ?? '.'
 const { GEMINI_KEY, GROQ_KEY } = loadEnv()
-const U = 'http://localhost:5173/'
+const U = process.env.BASE ?? 'http://localhost:5173/'
 const b = await chromium.launch({ channel: 'chrome' })
 const p = await b.newPage({ viewport: { width: 390, height: 844 } })
 const errs = []
