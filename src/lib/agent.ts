@@ -20,8 +20,7 @@ export interface Turn {
 }
 
 export interface PendingDelete {
-  space: Space
-  question: string // written by the model, in the teacher's language
+  spaces: Space[] // all spaces asked for in one message, confirmed with one tap
 }
 
 export interface AgentEnv {
@@ -91,16 +90,17 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
     }),
     create_space: tool({
       description: 'Create a new space (a student or class). Call it once per space when several are asked for.',
-      inputSchema: z.object({ name: z.string(), copyTopicsFrom: z.string().optional().describe('Existing space whose topics the new one starts with, only if asked') }),
+      inputSchema: z.object({ name: z.string().describe('The name the teacher said. Never make one up; if none was given, do not call this tool — ask.'), copyTopicsFrom: z.string().optional().describe('Existing space whose topics the new one starts with, only if asked') }),
       execute: async ({ name, copyTopicsFrom }) => {
+        name = name.trim()
+        if (!name) return { error: 'No name given. Nothing was created. Ask the teacher what the space should be called.' }
         if (await find(name)) return { error: `A space called "${name}" already exists.` }
         const from = copyTopicsFrom ? await find(copyTopicsFrom) : undefined
         if (copyTopicsFrom && !from) return notFound(copyTopicsFrom)
         const created = await createSpace(name)
         // Topics only: the other space's lesson memory and routine stay with it.
         if (from?.plan) await db.spaces.update(created.id, { plan: { summary: from.plan.summary, topics: from.plan.topics.map((t) => ({ ...t, date: undefined })) } })
-        env.navigate(`/space/${created.id}`)
-        actions.push(`+ ${name}`)
+        actions.push(`+ ${name}`) // the teacher stays where they are; open_space moves them
         return { created: name, topics: from?.plan?.topics.length ?? 0, routine: 'unknown' }
       },
     }),
@@ -119,6 +119,7 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
       description: 'Rename a space.',
       inputSchema: z.object({ space: z.string(), newName: z.string() }),
       execute: async ({ space, newName }) => {
+        if (!newName.trim()) return { error: 'No new name given. Ask the teacher for it.' }
         const s = await find(space)
         if (!s) return notFound(space)
         await db.spaces.update(s.id, { name: newName.trim() })
@@ -170,13 +171,14 @@ export async function runAgent(key: string, history: ModelMessage[], said: strin
       },
     }),
     delete_space: tool({
-      description: 'Delete a space and its lesson notes. Nothing is deleted yet: the app shows the teacher a button to confirm.',
-      inputSchema: z.object({ space: z.string(), question: z.string().describe("A short confirmation question naming the space, in the language of the teacher's latest message") }),
-      execute: async ({ space, question }) => {
+      description: 'Delete a space and its lesson notes. Call once per space; nothing is deleted yet: the app shows one button to confirm them all.',
+      inputSchema: z.object({ space: z.string() }),
+      execute: async ({ space }) => {
         const s = await find(space)
         if (!s) return notFound(space)
-        pendingDelete = { space: s, question }
-        return { waitingForTeacher: 'A confirm button is shown under your reply. Do not say it is deleted.' }
+        // Several delete calls in one message add up to one confirm card.
+        pendingDelete = { spaces: [...(pendingDelete?.spaces.filter((x) => x.id !== s.id) ?? []), s] }
+        return { waitingForTeacher: 'A confirm button is shown under your reply. Ask the teacher to confirm; do not say it is deleted.' }
       },
     }),
   }

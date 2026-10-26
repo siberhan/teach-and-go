@@ -1,6 +1,6 @@
 // Browser check with real AI: plan setup asks about the routine with options → tap one → Schedule shows dated topics;
 // the assistant agent by voice (fake mic) creates "Alex" with Maya's topics; typed commands answer, open, edit topics,
-// create two spaces from one non-English message (reply in that language), fill an empty space's topics, rename, and delete after a tap.
+// create two spaces from one non-English message (reply in that language), fill an empty space's topics, rename, and delete two spaces after one tap.
 // Usage: node scripts/check-assistant.mjs <spoken-command.wav> <screenshot-dir>
 import { chromium } from 'playwright-core'
 import { loadEnv } from './env.mjs'
@@ -95,6 +95,13 @@ async function typed(command) {
   return p.$$eval('.turn.assistant', (x) => x.at(-1).innerText)
 }
 
+r.noName = await typed('Yeni alan oluşturabilir misin?')
+r.countAfterNoName = (await spaces()).length
+await typed('İsmi Mehmet olsun.')
+r.mehmet = !!(await named('Mehmet')) && (await spaces()).length === r.countAfterNoName + 1 && (await spaces()).every((s) => s.name.trim())
+await typed('Mehmet alanını sil')
+await p.click('text=Yes, delete')
+await p.waitForSelector('.agent-actions li:has-text("🗑 Mehmet")', { timeout: 30000 })
 r.answer = await typed('Where did Maya stop?')
 await typed('Open Maya')
 r.openedMaya = p.url() === mayaUrl
@@ -103,17 +110,19 @@ r.edit = await typed('Make Derivative rules more detailed: split it into three s
 r.mayaTopics = [mayaBefore, (await named('Maya')).plan.topics.length]
 r.two = await typed('İki yeni alan oluştur: biri Ronaldo, diğeri Messi')
 r.ronaldoMessi = [!!(await named('Ronaldo')), !!(await named('Messi'))]
+r.stayedOnMaya = p.url() === mayaUrl // creating a space does not move the teacher
 r.fill = await typed('Ronaldo için konular: kesirler, ondalık sayılar, yüzdeler')
 r.ronaldoTopics = (await named('Ronaldo'))?.plan?.topics.map((t) => t.title)
 r.rename = await typed('Rename Alex to Alex Kim')
 r.renamed = !!(await named('Alex Kim'))
-await typed('Delete Alex Kim')
+await typed('Delete Alex Kim and Messi')
 await p.waitForSelector('text=Yes, delete', { timeout: 30000 })
 r.deleteText = await p.innerText('.assistant-panel .plan-summary')
-r.notYetDeleted = !!(await named('Alex Kim'))
+r.deleteAsk = await p.$$eval('.bubble.assistant:not(.thinking)', (x) => x.at(-1).innerText)
+r.notYetDeleted = !!(await named('Alex Kim')) && !!(await named('Messi'))
 await p.screenshot({ path: SP + '/a-delete.png' })
 await p.click('text=Yes, delete')
-await p.waitForSelector('.agent-actions li:has-text("Alex Kim")', { timeout: 30000 })
+await p.waitForSelector('.agent-actions li:has-text("🗑 Messi")', { timeout: 30000 })
 r.namesAfter = (await spaces()).map((s) => s.name).sort()
 
 r.cantReply = await typed('Can you edit the lesson from Oct 26?')
@@ -128,9 +137,9 @@ const ok =
   r.options.length >= 2 && r.routine && !/No routine/.test(r.routine) &&
   r.timeline.length === 3 && !r.timeline.some((t) => t.startsWith('—')) &&
   /alex/i.test(r.said) && r.alexTopics >= 6 && !(r.alexSchedule?.slots?.length || r.alexSchedule?.everyDays) && r.stillOpen &&
-  /Maya/.test(r.answer) && r.openedMaya && r.mayaTopics[1] > r.mayaTopics[0] &&
+  r.countAfterNoName === 2 && r.mehmet && /Maya/.test(r.answer) && r.openedMaya && r.mayaTopics[1] > r.mayaTopics[0] &&
   r.ronaldoMessi.every(Boolean) && notEnglish(r.two) && r.ronaldoTopics?.length === 3 && notEnglish(r.fill) &&
-  r.renamed && /Alex Kim/.test(r.deleteText) && !notEnglish(r.deleteText) && r.notYetDeleted && r.namesAfter.join() === 'Maya,Messi,Ronaldo' &&
+  r.renamed && /Alex Kim/.test(r.deleteText) && /Messi/.test(r.deleteText) && !notEnglish(r.deleteAsk) && r.notYetDeleted && r.namesAfter.join() === 'Maya,Ronaldo' && r.stayedOnMaya &&
   r.cantReply.length > 10 && r.closed && !errs.length
 console.log(ok ? 'PASS' : 'FAIL')
 process.exit(ok ? 0 : 1)

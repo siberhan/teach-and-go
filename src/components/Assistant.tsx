@@ -145,10 +145,11 @@ export default function Assistant() {
   async function confirmDelete(p: PendingDelete) {
     setPending(null)
     try {
-      await deleteSpace(p.space)
-      if (pathname.includes(p.space.id)) navigate('/spaces')
-      history.current = [...history.current, { role: 'user', content: `[app] The teacher confirmed: "${p.space.name}" was deleted.` }]
-      setTurns((t) => [...t, { who: 'assistant', text: '', actions: [`🗑 ${p.space.name}`] }])
+      for (const s of p.spaces) await deleteSpace(s)
+      if (p.spaces.some((s) => pathname.includes(s.id))) navigate('/spaces')
+      const names = p.spaces.map((s) => `"${s.name}"`).join(', ')
+      history.current = [...history.current, { role: 'user', content: `[app] The teacher confirmed: ${names} deleted.` }]
+      setTurns((t) => [...t, { who: 'assistant', text: '', actions: p.spaces.map((s) => `🗑 ${s.name}`) }])
     } catch (e) {
       fail(e)
     }
@@ -156,7 +157,7 @@ export default function Assistant() {
 
   function cancelDelete(p: PendingDelete) {
     setPending(null)
-    history.current = [...history.current, { role: 'user', content: `[app] The teacher tapped Cancel: "${p.space.name}" was not deleted.` }]
+    history.current = [...history.current, { role: 'user', content: `[app] The teacher tapped Cancel: ${p.spaces.map((s) => `"${s.name}"`).join(', ')} not deleted.` }]
   }
 
   if (!open) return null
@@ -185,7 +186,7 @@ export default function Assistant() {
           ))}
           {pending && (
             <div className="stack-sm bubble assistant">
-              <p className="plan-summary">{pending.question}</p>
+              <p className="plan-summary">{pending.spaces.map((s) => `🗑 ${s.name}`).join(' · ')}</p>
               <div className="row-actions">
                 <button className="btn btn-soft" onClick={() => cancelDelete(pending)}>Cancel</button>
                 <button className="btn btn-primary" onClick={() => confirmDelete(pending)}>Yes, delete</button>
