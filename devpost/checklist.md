@@ -88,15 +88,15 @@ Build mode: fast
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence:
-Route and stops:
-Edit outcome:
-Reflection:
-Activity mode:
+Activity and evidence: brief recap. The practice already happened during the build: bugs the learner found by trying the app (auto-navigation, nameless space, the unsaved "noted" reply) were each turned into a browser check before the fix was trusted.
+Route and stops: reference route in the map, not toured interactively: `AgentChat.tsx` (finishListening) → `agent.ts` (runAgent, create_space) → `db.ts` / `Spaces.tsx` (useLiveQuery).
+Edit outcome: not applicable; the learner asked for a short wrap-up near the deadline.
+Reflection: not asked; time went to shipping.
+Activity mode: recap
 
 ## Revisions
 

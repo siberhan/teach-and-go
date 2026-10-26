@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Teach&amp;Go App Map</title>
+<style>
+  :root { --bg:#fbf3ea; --card:#fffaf4; --ink:#2b2420; --muted:#7a6d64; --accent:#e9825a; --line:#ead9c8; --code:#f3e6d8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1f1a17; --card:#2a231f; --ink:#f4ebe2; --muted:#b5a597; --accent:#f09a74; --line:#433832; --code:#352c27; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 30px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 36px 0 10px; }
+  p.lead { color: var(--muted); margin: 0 0 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin: 12px 0; }
+  code { background: var(--code); padding: 1px 6px; border-radius: 6px; font-size: 14px; word-break: break-word; }
+  ol.route > li { margin-bottom: 14px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg .box { fill: var(--card); stroke: var(--accent); stroke-width: 1.5; }
+  svg .ext { fill: var(--code); stroke: var(--line); stroke-width: 1.5; }
+  svg text { fill: var(--ink); font: 13px system-ui, sans-serif; }
+  svg .small { fill: var(--muted); font-size: 12px; }
+  svg .arrow { stroke: var(--accent); stroke-width: 1.5; fill: none; marker-end: url(#a); }
+  details summary { cursor: pointer; font-weight: 600; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Teach&amp;Go — App Map</h1>
+  <p class="lead">A take-home guide to where things live. Snapshot of commit <code>d7aa97f</code>; the code may drift after this.</p>
+
+  <section class="card">
+    <strong>What the app does.</strong> A private tutor records a lesson in the browser. The AI turns the recording into
+    “where you stopped” and what to do next time, against the plan built from the curriculum. A voice assistant (a small
+    agent) can create, rename, plan and delete spaces on every screen. There is no server: data lives in the browser
+    (IndexedDB via Dexie), AI calls go straight to OpenRouter (and Groq for speech, if its key is set).
+  </section>
+
+  <h2>One action, end to end</h2>
+  <p>Saying <em>“Create a space called Alex”</em> in the assistant:</p>
+  <svg viewBox="0 0 720 210" role="img" aria-label="Diagram: mic, speech to text, agent, tool, database, screen">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e9825a"/></marker></defs>
+    <rect class="box" x="10" y="20" width="150" height="56" rx="10"/><text x="22" y="44">Mic → AgentChat</text><text class="small" x="22" y="62">finishListening()</text>
+    <rect class="ext" x="200" y="20" width="150" height="56" rx="10"/><text x="212" y="44">Speech to text</text><text class="small" x="212" y="62">Groq → OpenRouter Whisper</text>
+    <rect class="box" x="390" y="20" width="150" height="56" rx="10"/><text x="402" y="44">runAgent()</text><text class="small" x="402" y="62">lib/agent.ts</text>
+    <rect class="ext" x="570" y="20" width="140" height="56" rx="10"/><text x="582" y="44">GPT-6 Luna</text><text class="small" x="582" y="62">picks a tool</text>
+    <rect class="box" x="390" y="130" width="150" height="56" rx="10"/><text x="402" y="154">create_space tool</text><text class="small" x="402" y="172">writes db.spaces</text>
+    <rect class="box" x="200" y="130" width="150" height="56" rx="10"/><text x="212" y="154">IndexedDB (Dexie)</text><text class="small" x="212" y="172">lib/db.ts</text>
+    <rect class="box" x="10" y="130" width="150" height="56" rx="10"/><text x="22" y="154">Screen updates</text><text class="small" x="22" y="172">useLiveQuery()</text>
+    <path class="arrow" d="M160 48 H196"/><path class="arrow" d="M350 48 H386"/><path class="arrow" d="M540 40 H566"/><path class="arrow" d="M566 60 H544"/>
+    <path class="arrow" d="M465 76 V126"/><path class="arrow" d="M390 158 H354"/><path class="arrow" d="M200 158 H164"/>
+  </svg>
+
+  <h2>The route (3 stops)</h2>
+  <ol class="route">
+    <li><strong>Input</strong> — <code>src/components/AgentChat.tsx</code>, search <code>finishListening</code>. The mic recording becomes text with <code>dictate()</code>, then <code>handle()</code> sends it, plus any attached documents, to the agent. The same component is the assistant panel and the plan conversation.</li>
+    <li><strong>Logic</strong> — <code>src/lib/agent.ts</code>, search <code>runAgent</code> and <code>create_space</code>. One <code>generateText</code> call from the Vercel AI SDK lets the model call tools up to <code>MAX_STEPS</code> times. Each tool is a small function with a zod schema; the instructions hold the rules (never guess the routine, ask for a name, delete only after a tap).</li>
+    <li><strong>Storage and result</strong> — <code>src/lib/db.ts</code> (the <code>Space</code> type) and <code>src/screens/Spaces.tsx</code> (search <code>useLiveQuery</code>). The tool writes to IndexedDB; every screen that reads with <code>useLiveQuery</code> re-renders by itself. That is why the new space appears without navigating.</li>
+  </ol>
+
+  <h2>To change this, start here</h2>
+  <ul>
+    <li><strong>What the assistant may do</strong> — add or edit a <code>tool({...})</code> in <code>src/lib/agent.ts</code>.</li>
+    <li><strong>How the AI plans</strong> — the <code>planRules</code> text in <code>src/lib/agent.ts</code>.</li>
+    <li><strong>The lesson summary (“where you stopped”)</strong> — <code>analyzeLesson</code> in <code>src/lib/ai.ts</code>, called from <code>src/lib/analysis.ts</code>.</li>
+    <li><strong>The model</strong> — <code>llm.model</code> in <code>src/lib/openrouter.ts</code>.</li>
+    <li><strong>Speech provider order</strong> — <code>speechToText</code> in <code>src/lib/speech.ts</code>.</li>
+    <li><strong>Colors and type</strong> — the tokens at the top of <code>src/styles/global.css</code>.</li>
+  </ul>
+
+  <h2>A practice to reuse</h2>
+  <div class="card">
+    <p><strong>Turn a reported bug into a check before trusting the fix.</strong> When “no lesson this week, we start next week” got the reply “noted” but nothing was saved, the fix was not only a new prompt rule: <code>scripts/check-setup.mjs</code> now sends that exact sentence and asserts that the routine's start date moved and the lesson days stayed the same.</p>
+    <p class="muted">On another project: whenever an AI says it did something, check the stored result, not the reply text.</p>
+  </div>
+
+  <h2>Run it again</h2>
+  <div class="card">
+    <code>npm install</code> then <code>npm run dev</code>, open the printed address, and add your OpenRouter key (and optionally a Groq key) in Settings.
+    <details><summary>Checks</summary><p><code>node scripts/check-setup.mjs</code>, <code>check-kernel.mjs</code>, <code>check-assistant.mjs</code> drive the real app in a browser with real AI calls; they read keys from the git-ignored <code>.env.local</code>.</p></details>
+  </div>
+</main>
+</body>
+</html>
