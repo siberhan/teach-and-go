@@ -21,7 +21,8 @@ export default function Spaces() {
   return (
     <main className="screen">
       <TopBar title="Spaces" back="/" />
-      <div className="list">
+      <p className="desktop-only empty-hint">Pick a space on the left, or create a new one.</p>
+      <div className="list phone-only">
         {spaces?.map((s) => (
           <Link key={s.id} className="row row-link" to={`/space/${s.id}`}>
             <span>{s.name}</span>
@@ -29,6 +30,7 @@ export default function Spaces() {
           </Link>
         ))}
       </div>
+      <div className="phone-only stack">
       {naming ? (
         <form className="stack" onSubmit={create}>
           <input className="input" autoFocus name="name" placeholder="Student or class name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -37,6 +39,7 @@ export default function Spaces() {
       ) : (
         <button className="btn btn-primary" onClick={() => setNaming(true)}>New space</button>
       )}
+      </div>
     </main>
   )
 }

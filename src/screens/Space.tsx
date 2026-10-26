@@ -16,12 +16,18 @@ export default function Space() {
   return (
     <main className="screen">
       <TopBar title={space.name} back="/spaces" right={<Link className="icon-btn" aria-label="Space settings" to={`/space/${id}/settings`}>⚙</Link>} />
-      <ThreadCard card={threadCard(space.plan, lessons)} spaceId={id} />
-      <Link className="btn btn-primary" to={`/space/${id}/record`}>New recording</Link>
-      <div className="list">
-        {lessons.map((l) => (
-          <LessonRow key={l.id} lesson={l} />
-        ))}
+      <div className="space-grid">
+        <div className="stack">
+          <ThreadCard card={threadCard(space.plan, lessons)} spaceId={id} />
+          <Link className="btn btn-primary" to={`/space/${id}/record`}>New recording</Link>
+        </div>
+        <div className="list">
+          <div className="label desktop-only">Lessons</div>
+          {lessons.map((l) => (
+            <LessonRow key={l.id} lesson={l} />
+          ))}
+          {!lessons.length && <p className="empty-box desktop-only">Your lessons will appear here.</p>}
+        </div>
       </div>
     </main>
   )

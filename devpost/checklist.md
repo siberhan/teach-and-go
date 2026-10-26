@@ -103,3 +103,4 @@ Activity mode:
 - Splitting re-encodes overlapping PCM ranges instead of cutting FLAC bytes — a FLAC file can't be cut at arbitrary bytes.
 - `stoppingPoint` gained `topicFinished` — the Thread card needs to know whether the next lesson continues the same topic or starts the next one; without it, the deferred reminder could never match the following topic.
 - Demo lecture audio is made with macOS `say` from our own script (`demo/lecture.txt`) for testing; a nicer TTS voice can replace it for the video.
+- Desktop layout added at the slice-4 checkpoint (learner feedback: screens looked phone-only and empty on a computer) — from 900 px wide, a sidebar with spaces, New space and Settings stays open beside the screen; the Space screen puts the Thread card and lessons side by side; the composer sits under the content instead of at the bottom. Phone layout is unchanged.

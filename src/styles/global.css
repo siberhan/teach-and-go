@@ -132,3 +132,37 @@ button, input, textarea { font: inherit; color: inherit; }
 span.chip { cursor: default; }
 .plan-progress li.past { color: var(--muted); text-decoration: line-through; }
 .plan-progress li.now { font-weight: var(--weight-bold); }
+
+/* Desktop shell: sidebar + content. Hidden on phones. */
+.sidebar { display: none; }
+.desktop-only { display: none; }
+.space-grid { display: flex; flex-direction: column; gap: var(--space-2); }
+.empty-hint { font-size: 20px; color: var(--muted); }
+.empty-box { border: 1.5px dashed var(--muted); border-radius: var(--radius); padding: var(--space-3); color: var(--muted); text-align: center; }
+
+@media (min-width: 900px) {
+  .shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  .sidebar {
+    display: flex; flex-direction: column; gap: var(--space-2);
+    position: sticky; top: 0; height: 100vh;
+    padding: var(--space-3) var(--space-2);
+    background: var(--surface); border-right: var(--border);
+  }
+  .sidebar-logo { font-size: 26px; font-weight: var(--weight-bold); text-decoration: none; padding: 0 8px var(--space-1); }
+  .sidebar-list { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; }
+  .sidebar-item { padding: 10px 12px; border-radius: var(--radius); text-decoration: none; border: 1.5px solid transparent; }
+  .sidebar-item:hover { background: var(--bg); }
+  .sidebar-item.active { background: var(--soft); border: var(--border); font-weight: var(--weight-bold); }
+  .sidebar-settings { color: var(--muted); text-decoration: none; padding: 8px 12px; }
+  .sidebar-settings.active { color: var(--text); font-weight: var(--weight-bold); }
+
+  .shell-main .screen { max-width: 980px; padding: var(--space-4) 48px; gap: var(--space-3); }
+  .shell-main .topbar { grid-template-columns: 44px 1fr 44px; }
+  .shell-main .topbar-title { font-size: 28px; text-align: left; }
+  .phone-only { display: none; }
+  .desktop-only { display: block; }
+  .space-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-4); align-items: start; }
+  .space-grid .thread-stop { font-size: 34px; }
+  .composer { margin-top: 0; }
+  .shell-main .hero { min-height: 50vh; }
+}
