@@ -1,0 +1,25 @@
+/* Design tokens — option C "Peach Paper", picked by the learner. */
+:root {
+  --bg: #FFF8F1;
+  --surface: #FFFFFF;
+  --text: #2B2622;
+  --muted: #8C8078;
+  --accent: #F4B99C;      /* peach: main action */
+  --accent-ink: #3A2014;
+  --soft: #FCE9DE;        /* thread card */
+  --sky: #CFE3F3;         /* reminders */
+  --danger: #F2C4C4;
+
+  --font: 'Lexend', system-ui, sans-serif;
+  --weight-bold: 600;
+
+  --radius: 10px;
+  --border: 1.5px solid var(--text);
+  --shadow: 3px 3px 0 var(--text);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --max-width: 480px;
+}
