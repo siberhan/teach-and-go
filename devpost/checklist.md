@@ -84,7 +84,7 @@ Build mode: fast
 - [x] A new document on an existing plan is never applied silently; with no clear instruction the AI asks what to do and taught topics stay
 - [x] Voice assistant on every screen, as a continuing conversation with a mic; a small agent that uses several app tools per message, changes apply right away, delete asks first
 - [x] Bring your own OpenRouter key (GPT-6 Luna, reasoning off; Whisper large v3), optional free Groq key for speech with OpenRouter fallback
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
