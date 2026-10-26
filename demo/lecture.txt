@@ -1,0 +1,11 @@
+Okay Maya, let's get started. Last time we finished the definition of the derivative, so today is all about derivative rules. These rules let us skip the long limit calculation.
+
+First, the power rule. If f of x equals x to the n, then the derivative is n times x to the n minus one. So the derivative of x cubed is three x squared. The derivative of x to the fifth is five x to the fourth. And a constant on its own has a derivative of zero.
+
+Next, the product rule. If you multiply two functions, f times g, the derivative is f prime times g, plus f times g prime. Let's try x squared times sine of x. That gives two x times sine of x, plus x squared times cosine of x.
+
+Now the quotient rule. For f divided by g, the derivative is f prime g minus f g prime, all over g squared. Low dee high minus high dee low, over low squared. Let's do x over x plus one. We get one times x plus one, minus x times one, over x plus one squared, which is one over x plus one squared.
+
+You might ask: what about something like sine of x squared, a function inside another function? That needs the chain rule. I'll explain that later, it is a big idea on its own.
+
+Okay, that is all three rules: power, product and quotient. For homework, practice ten quotient rule problems. Great work today.

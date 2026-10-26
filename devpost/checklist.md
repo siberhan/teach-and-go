@@ -39,7 +39,7 @@ Build mode: fast
   Learner check: Open your space → Space settings, attach the demo curriculum, read the AI's summary, press confirm (or send a correction) and check the plan looks right.
   Commit: `Turn uploaded curriculum into a confirmed plan`
 
-- [ ] **4. You upload a lesson recording and the space tells you where to start — and reminds you of the "explain later" topic**
+- [x] **4. You upload a lesson recording and the space tells you where to start — and reminds you of the "explain later" topic**
   Becomes usable: New recording → upload an audio file → Lesson finished screen ("Lesson complete", length, loading) → in the background: convert to 16 kHz mono FLAC, split if over ~24 MB, Groq transcript, Gemini analysis → lesson saved with covered topics, stopping point and deferred topics → audio deleted. The Space screen's Thread card shows where to start and the deferred reminder when it fits the next topic. Lesson detail and Thread detail open on tap.
   Why now: This is the unique kernel. It also carries the two riskiest unknowns (FLAC encoder in the browser, Groq accepting it), so it comes right after the plan exists.
   PRD ref: `prd.md > Recording a Lesson`, `prd.md > Lesson Analysis and Memory`, `prd.md > The Thread Card`, `prd.md > Lesson Detail`, `prd.md > The Core Journey` (steps 6-9)
@@ -99,3 +99,7 @@ Activity mode:
 - Gemini model ID is `gemini-3.5-flash-lite` and low thinking is `thinkingConfig.thinkingLevel: LOW` (verified against the docs and SDK types, and with a real call) — this was open in the spec.
 - Lesson-day buttons appear on the plan card when the curriculum has no dates — the "How often are lessons?" question became tappable day buttons instead of a free-text reply, matching "simple buttons" in the PRD.
 - Dev-only test keys live in git-ignored `.env.local`, read only by `scripts/` checks; the app still takes keys from Settings.
+- FLAC encoder: `libflacjs` 5.6.0 (MIT) WASM build is vendored in `public/flac/` and runs in a classic Web Worker — it ships as an Emscripten UMD script, not a Vite-friendly module. Verified in Chrome: output starts with `fLaC` and Groq transcribes it correctly. FLAC at 16 kHz mono is ~1.2 MB/min, so lessons over ~20 min are split.
+- Splitting re-encodes overlapping PCM ranges instead of cutting FLAC bytes — a FLAC file can't be cut at arbitrary bytes.
+- `stoppingPoint` gained `topicFinished` — the Thread card needs to know whether the next lesson continues the same topic or starts the next one; without it, the deferred reminder could never match the following topic.
+- Demo lecture audio is made with macOS `say` from our own script (`demo/lecture.txt`) for testing; a nicer TTS voice can replace it for the video.

@@ -1,5 +1,5 @@
 import { GoogleGenAI, ThinkingLevel } from '@google/genai'
-import type { Plan } from './db.ts'
+import type { Deferred, Lesson, Plan } from './db.ts'
 
 // Direct Gemini calls: JSON out, low thinking, no agent framework.
 export const GEMINI_MODEL = 'gemini-3.5-flash-lite'
@@ -118,4 +118,67 @@ Correction: ${correction}`,
   ]
   const draft = await askJson<PlanDraft>(key, parts, draftSchema)
   return { ...draft, madeByAi: false, plan: withIds(draft.plan, plan) }
+}
+
+export interface LessonMemory {
+  covered: string[]
+  stoppingPoint: { text: string; topicId?: string; topicFinished: boolean }
+  deferred: { text: string; topicId?: string }[]
+  resolvedDeferredIds: string[]
+}
+
+const memorySchema = {
+  type: 'object',
+  properties: {
+    covered: { type: 'array', items: { type: 'string', description: 'A few words each.' } },
+    stoppingPoint: {
+      type: 'object',
+      properties: {
+        text: { type: 'string', description: 'Where the lesson stopped, one short phrase.' },
+        topicId: { type: 'string', description: 'id of the plan topic the lesson stopped in.' },
+        topicFinished: { type: 'boolean', description: 'true if that topic was fully finished.' },
+      },
+      required: ['text', 'topicFinished'],
+    },
+    deferred: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          text: { type: 'string', description: 'The postponed subject, a few words.' },
+          topicId: { type: 'string', description: 'id of the plan topic where it belongs.' },
+        },
+        required: ['text'],
+      },
+    },
+    resolvedDeferredIds: { type: 'array', items: { type: 'string' } },
+  },
+  required: ['covered', 'stoppingPoint', 'deferred', 'resolvedDeferredIds'],
+}
+
+export async function analyzeLesson(
+  key: string,
+  plan: Plan | undefined,
+  lastStop: Lesson['stoppingPoint'],
+  openDeferred: Deferred[],
+  transcript: string,
+): Promise<LessonMemory> {
+  const parts = [
+    {
+      text: `You read the transcript of one tutoring lesson and write the lesson memory. Be very short.
+- covered: the topics actually taught, a few words each.
+- stoppingPoint: where the lesson stopped. topicId = the plan topic it stopped in; topicFinished = true only if that whole topic was finished.
+- deferred: every subject the teacher explicitly postponed ("I'll explain this later", "we'll come back to this"). Link each to the plan topic where it belongs (topicId), if any.
+- resolvedDeferredIds: ids of the open deferred items below that were actually explained in this lesson.
+Use only ids from the lists below.
+
+Plan topics: ${JSON.stringify(plan?.topics.map(({ id, title }) => ({ id, title })) ?? [])}
+Previous stopping point: ${lastStop ? JSON.stringify(lastStop) : '(first lesson)'}
+Open deferred items: ${JSON.stringify(openDeferred.map(({ id, text }) => ({ id, text })))}
+
+Transcript:
+${transcript}`,
+    },
+  ]
+  return askJson<LessonMemory>(key, parts, memorySchema)
 }

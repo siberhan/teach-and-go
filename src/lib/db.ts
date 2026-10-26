@@ -42,7 +42,7 @@ export interface Lesson {
   status: 'analyzing' | 'done' | 'failed'
   error?: string
   covered?: string[]
-  stoppingPoint?: { text: string; topicId?: string }
+  stoppingPoint?: { text: string; topicId?: string; topicFinished?: boolean }
   deferred?: Deferred[]
 }
 
