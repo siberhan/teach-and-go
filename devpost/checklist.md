@@ -76,6 +76,9 @@ Build mode: fast
 
 ## Final Review
 
+- [ ] Recording keeps going when the teacher leaves the recording screen; a bottom bar shows it and leads back to it (learner feedback: going back deleted the recording)
+- [ ] Recording can be paused and resumed (and discarded); paused time is not recorded and the result is still one lesson
+- [ ] Start screen: upcoming lessons move into a notification menu instead of stacking at the top (learner feedback: many students would cover the screen)
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map

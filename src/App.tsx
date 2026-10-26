@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import RecordingBar from './components/RecordingBar.tsx'
 import Shell from './components/Shell.tsx'
 import LessonDetail from './screens/LessonDetail.tsx'
 import LessonFinished from './screens/LessonFinished.tsx'
@@ -12,6 +13,7 @@ import ThreadDetail from './screens/ThreadDetail.tsx'
 
 export default function App() {
   return (
+    <>
     <Routes>
       <Route path="/" element={<Start />} />
       <Route element={<Shell />}>
@@ -25,5 +27,7 @@ export default function App() {
         <Route path="/lesson/:lessonId/finished" element={<LessonFinished />} />
       </Route>
     </Routes>
+    <RecordingBar />
+    </>
   )
 }
